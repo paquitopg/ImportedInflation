@@ -1,3 +1,5 @@
+% function to call dbnomics.world API and retrieve data
+
 function [output_mat,output_table,dates_nb] =  call_dbnomics(varargin)
 	% query dbnomics.world
 	% gauthier@vermandel.fr
