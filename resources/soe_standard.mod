@@ -1,3 +1,5 @@
+% New Keynesian Model with 2 exchange economies
+
 close all;
 %format long
 

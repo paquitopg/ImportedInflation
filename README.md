@@ -1,4 +1,6 @@
 # ImportedInflation
+"What impact does a shock in energy prices have on bilateral trade between France and Germany, and to what extent does Germany (which is more exposed) pass on persistent imported inflation to France via its exports?"
+
 Modeling of imported inflation in MatLab and Dynare. 
 
 ## Model 
