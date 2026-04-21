@@ -50,3 +50,6 @@ rsconnect/
 
 # PDF files
 *.pdf
+
+# Logs
+REFLEXION.md

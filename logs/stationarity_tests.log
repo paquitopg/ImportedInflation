@@ -1,0 +1,32 @@
+==============================================================
+  STATIONARITY TESTS  -  ImportedInflation project
+==============================================================
+Run date    : 2026-04-22 00:10:22
+Data file   : /Users/pacogoze/Desktop/ENSAE/S2/MacroModelling/projet/ImportedInflation/data/myobs_FR_DE.mat
+Sample      : 1999.25 - 2025.50  (N = 106)
+Test        : Augmented Dickey-Fuller (Model = ARD, drift)
+H0          : racine unitaire
+Decision    : rejet de H0 au seuil 5% (p<0.05) => stationnaire
+--------------------------------------------------------------
+
+Variable             N    ADF-stat     p-value  Stationnaire?
+gy_H_obs           106     -12.896      0.0010  OUI          
+gy_F_obs           106     -11.685      0.0010  OUI          
+pi_H_obs           106      -7.793      0.0010  OUI          
+pi_F_obs           106      -7.194      0.0010  OUI          
+gc_H_obs           106     -15.376      0.0010  OUI          
+gc_F_obs           106     -13.078      0.0010  OUI          
+r_H_obs            106      -1.160      0.6642  non          
+gex_H_obs          106     -10.616      0.0010  OUI          
+gex_F_obs          106     -10.335      0.0010  OUI          
+pi_NRG_H_q         106      -7.268      0.0010  OUI          
+pi_NRG_F_q         106      -7.170      0.0010  OUI          
+
+--------------------------------------------------------------
+Lecture du tableau :
+  Series en taux de croissance (gy_*, gc_*, gex_*, pi_*) :
+    attendues stationnaires (log-diff).
+  Series d'inflation energie (pi_NRG_*) :
+    attendues stationnaires mais tres volatiles pendant 2021-2023.
+  r_H_obs (Euribor - r_bar) : stationnaire en niveau apres centrage.
+==============================================================
