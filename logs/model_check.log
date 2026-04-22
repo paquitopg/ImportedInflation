@@ -1,0 +1,50 @@
+==============================================================
+  MODEL CHECK  -  two_countries_UEM.mod
+==============================================================
+Run date     : 2026-04-23 00:18:05
+Model file   : /Users/pacogoze/Desktop/ENSAE/S2/MacroModelling/projet/ImportedInflation/src/two_countries_UEM.mod
+Dynare run   : ECHEC
+--------------------------------------------------------------
+
+1) RESIDUS AU STEADY-STATE
+   max|residu|   = NaN
+   Tolerance     = 1.000e-08
+   Conclusion    : ECHEC (recalibrer SS)
+
+2) CONDITION DE BLANCHARD-KAHN
+   # valeurs propres > 1  : NaN
+   # variables forward    : NaN  (M_.nfwrd + M_.nboth)
+   stoch_simul execute    : non
+   Conclusion    : ECHEC (indetermination)
+
+3) IRF : choc energie Allemagne (eta_p_F = +1 sigma = +0.015)
+
+   Variable |      t=1 |      t=4 |      t=8 |     t=12
+   ---------+----------+----------+----------+----------
+   pic_F    |       NA |       NA |       NA |       NA |
+   pic_H    |       NA |       NA |       NA |       NA |
+   pi_UEM   |       NA |       NA |       NA |       NA |
+   y_F      |       NA |       NA |       NA |       NA |
+   y_H      |       NA |       NA |       NA |       NA |
+   rer      |       NA |       NA |       NA |       NA |
+   r        |       NA |       NA |       NA |       NA |
+   ex_H     |       NA |       NA |       NA |       NA |
+   ex_F     |       NA |       NA |       NA |       NA |
+   NFA_H    |       NA |       NA |       NA |       NA |
+
+   Tests de signe attendus (cost-push DE) :
+     [NON] pic_F > 0 a t=1
+     [NON] pic_H > 0 a t=4
+     [NON] pi_UEM > 0 a t=1
+     [NON] y_F < 0 a t=1
+     [NON] y_H < 0 a t=4
+     [NON] rer > 0 a t=1
+     [NON] r > 0 a t=4
+   0 / 7 tests passes.
+   Conclusion    : Signes IRF a verifier (cf. raw log)
+
+--------------------------------------------------------------
+ERREUR : The steadystate file did not compute the steady state
+VERDICT : MODEL A REVOIR
+==============================================================
+Sortie brute Dynare : logs/model_check_raw.log

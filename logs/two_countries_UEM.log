@@ -1,0 +1,114 @@
+Starting Dynare (version 6.5).
+Calling Dynare with arguments: noclearall
+Starting preprocessing of the model file ...
+Found 39 equation(s).
+Evaluating expressions...
+Computing static model derivatives (order 1).
+Normalizing the static model...
+Finding the optimal block decomposition of the static model...
+12 block(s) found:
+  11 recursive block(s) and 1 simultaneous block(s).
+  the largest simultaneous block has 24 equation(s)
+                                 and 24 feedback variable(s).
+Computing dynamic model derivatives (order 1).
+Normalizing the dynamic model...
+Finding the optimal block decomposition of the dynamic model...
+11 block(s) found:
+  10 recursive block(s) and 1 simultaneous block(s).
+  the largest simultaneous block has 24 equation(s)
+                                 and 21 feedback variable(s).
+Preprocessing completed.
+Preprocessing time: 0h00m00s.
+
+
+Residuals of the static equations:
+Equation number  1: FOC consommation                                           :       0.000000
+Equation number  2: lb_F                                                       :       0.000000
+Equation number  3: Equation d Euler (taux unique r en UEM)                    :       0.000000
+Equation number  4: 4                                                          :       0.000000
+Equation number  5: Offre de travail                                           :       0.000000
+Equation number  6: 6                                                          :       0.000000
+Equation number  7: NKPC Rotemberg Home                                        :       0.000000
+Equation number  8: NKPC Rotemberg Foreign                                     :       0.000000
+Equation number  9: FOC travail entreprise                                     :       0.000000
+Equation number 10: mc_F                                                       :       0.000000
+Equation number 11: Production                                                 :       0.000000
+Equation number 12: y_F                                                        :       0.000000
+Equation number 13: Indice de prix CES                                         :       0.000000
+Equation number 14: 14                                                         :       0.000000
+Equation number 15: Prix relatif                                               :       0.000000
+Equation number 16: 16                                                         :       0.000000
+Equation number 17: Marche biens Home                                          :       0.000000
+Equation number 18: Marche biens Foreign                                       :       0.000000
+Equation number 19: Aggregat inflation UEM HICP (GDP weighted)                 :       0.000000
+Equation number 20: Aggregat activite UEM                                      :       0.000000
+Equation number 21: Regle BCE unique (lissee)                                  :       0.000000
+Equation number 22: Accumulation NFA (Home)                                    :       0.553210
+Equation number 23: Bouclage international                                     :       0.000000
+Equation number 24: Taux de change reel (intra-UEM = differentiel d inflation) :       0.000000
+Equation number 25: Exports FR vers DE                                         :       0.000000
+Equation number 26: Exports DE vers FR                                         :       0.000000
+Equation number 27: mesure : croissance PIB FR                                 :       0.000000
+Equation number 28: mesure : croissance PIB DE                                 :       0.000000
+Equation number 29: mesure : inflation HICP FR (deviation cible)               :       0.000000
+Equation number 30: mesure : inflation HICP DE (deviation cible)               :       0.000000
+Equation number 31: 31                                                         :       0.000000
+Equation number 32: 32                                                         :       0.000000
+Equation number 33: 33                                                         :       0.000000
+Equation number 34: 34                                                         :       0.000000
+Equation number 35: 35                                                         :       0.000000
+Equation number 36: 36                                                         :       0.000000
+Equation number 37: 37                                                         :       0.000000
+Equation number 38: 38                                                         :       0.000000
+Equation number 39: 39                                                         :       0.000000
+
+
+[Warning: Some of the parameters have no value (chi_H, chi_F, phi_H, phi_F, A) when using
+steady. If these parameters are not initialized in a steadystate file or a
+steady_state_model-block, Dynare may not be able to solve the model. Note that simul,
+perfect_foresight_setup, and perfect_foresight_solver do not automatically call the steady
+state file.] 
+
+
+Residuals of the static equations:
+Equation number  1: FOC consommation                                           :       0.000000
+Equation number  2: lb_F                                                       :       0.000000
+Equation number  3: Equation d Euler (taux unique r en UEM)                    :       0.000000
+Equation number  4: 4                                                          :       0.000000
+Equation number  5: Offre de travail                                           :       0.000000
+Equation number  6: 6                                                          :       0.000000
+Equation number  7: NKPC Rotemberg Home                                        :       0.000000
+Equation number  8: NKPC Rotemberg Foreign                                     :       0.000000
+Equation number  9: FOC travail entreprise                                     :       0.000000
+Equation number 10: mc_F                                                       :       0.000000
+Equation number 11: Production                                                 :       0.000000
+Equation number 12: y_F                                                        :       0.000000
+Equation number 13: Indice de prix CES                                         :       0.000000
+Equation number 14: 14                                                         :       0.000000
+Equation number 15: Prix relatif                                               :       0.000000
+Equation number 16: 16                                                         :       0.000000
+Equation number 17: Marche biens Home                                          :       0.000000
+Equation number 18: Marche biens Foreign                                       :       0.000000
+Equation number 19: Aggregat inflation UEM HICP (GDP weighted)                 :       0.000000
+Equation number 20: Aggregat activite UEM                                      :       0.000000
+Equation number 21: Regle BCE unique (lissee)                                  :       0.000000
+Equation number 22: Accumulation NFA (Home)                                    :       0.553210
+Equation number 23: Bouclage international                                     :       0.000000
+Equation number 24: Taux de change reel (intra-UEM = differentiel d inflation) :       0.000000
+Equation number 25: Exports FR vers DE                                         :       0.000000
+Equation number 26: Exports DE vers FR                                         :       0.000000
+Equation number 27: mesure : croissance PIB FR                                 :       0.000000
+Equation number 28: mesure : croissance PIB DE                                 :       0.000000
+Equation number 29: mesure : inflation HICP FR (deviation cible)               :       0.000000
+Equation number 30: mesure : inflation HICP DE (deviation cible)               :       0.000000
+Equation number 31: 31                                                         :       0.000000
+Equation number 32: 32                                                         :       0.000000
+Equation number 33: 33                                                         :       0.000000
+Equation number 34: 34                                                         :       0.000000
+Equation number 35: 35                                                         :       0.000000
+Equation number 36: 36                                                         :       0.000000
+Equation number 37: 37                                                         :       0.000000
+Equation number 38: 38                                                         :       0.000000
+Equation number 39: 39                                                         :       0.000000
+
+
