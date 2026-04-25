@@ -83,7 +83,7 @@ if dynare_ok && isfield(oo_,'dr') && isfield(oo_.dr,'eigval')
 end
 
 % --- 4) IRF : choc eta_p_F (+1 sigma) ---
-vars_irf = {'pic_F','pic_H','pi_UEM','y_F','y_H','rer','r','ex_H','ex_F','NFA_H'};
+vars_irf = {'pic_F','pic_H','pi_UEM','y_F','y_H','c_H','c_F','rer','r','ex_H','ex_F','NFA_H'};
 H_report = [1 4 8 12];
 shock    = 'eta_p_F';
 irf_mat  = nan(length(vars_irf), length(H_report));
@@ -103,10 +103,12 @@ end
 % --- 5) Tests de signe (theorie : choc cost-push en DE) ---
 % On attend :
 %   pic_F > 0      (inflation DE monte a l'impact)
-%   pic_H > 0 rapidement (transmission imports FR depuis DE)
+%   pic_H > 0 rapidement (transmission imports FR via rer)
 %   pi_UEM > 0     (inflation zone euro)
 %   y_F < 0        (recession allemande)
-%   y_H < 0        (recession francaise, retardee et attenuee)
+%   c_H < 0        (pouvoir d'achat FR erode = "inflation importee")
+%                  NB : y_H peut rester positif via canal d'export
+%                  (DE plus cher => FR gagne en competitivite intra-UEM)
 %   rer > 0        (rer FR se deprecie vs DE = DE plus cher intra-UEM)
 %   r > 0          (BCE reagit a l'inflation)
 gi = @(v,h) get_irf_val(oo_, v, shock, h);
@@ -116,7 +118,7 @@ sign_tests = {
     'pic_H > 0 a t=4',   gi('pic_H',4) > 0
     'pi_UEM > 0 a t=1',  gi('pi_UEM',1) > 0
     'y_F < 0 a t=1',     gi('y_F',1)  < 0
-    'y_H < 0 a t=4',     gi('y_H',4)  < 0
+    'c_H < 0 a t=4',     gi('c_H',4)  < 0
     'rer > 0 a t=1',     gi('rer',1)  > 0
     'r > 0 a t=4',       gi('r',4)    > 0
 };

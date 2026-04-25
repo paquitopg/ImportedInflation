@@ -8,7 +8,7 @@ tic0 = tic;
 % Define global variables.
 global M_ options_ oo_ estim_params_ bayestopt_ dataset_ dataset_info estimation_info
 options_ = [];
-M_.fname = 'two_countries_UEM';
+M_.fname = 'estimation_UEM';
 M_.dynare_version = '6.5';
 oo_.dynare_version = '6.5';
 options_.dynare_version = '6.5';
@@ -46,9 +46,9 @@ M_.exo_names_long(8) = {'eta_g_F'};
 M_.exo_names(9) = {'eta_r'};
 M_.exo_names_tex(9) = {'eta\_r'};
 M_.exo_names_long(9) = {'eta_r'};
-M_.endo_names = cell(39,1);
-M_.endo_names_tex = cell(39,1);
-M_.endo_names_long = cell(39,1);
+M_.endo_names = cell(42,1);
+M_.endo_names_tex = cell(42,1);
+M_.endo_names_long = cell(42,1);
 M_.endo_names(1) = {'c_H'};
 M_.endo_names_tex(1) = {'c\_H'};
 M_.endo_names_long(1) = {'c_H'};
@@ -166,6 +166,15 @@ M_.endo_names_long(38) = {'pi_H_obs'};
 M_.endo_names(39) = {'pi_F_obs'};
 M_.endo_names_tex(39) = {'pi\_F\_obs'};
 M_.endo_names_long(39) = {'pi_F_obs'};
+M_.endo_names(40) = {'r_F_obs'};
+M_.endo_names_tex(40) = {'r\_F\_obs'};
+M_.endo_names_long(40) = {'r_F_obs'};
+M_.endo_names(41) = {'gex_H_obs'};
+M_.endo_names_tex(41) = {'gex\_H\_obs'};
+M_.endo_names_long(41) = {'gex_H_obs'};
+M_.endo_names(42) = {'gex_F_obs'};
+M_.endo_names_tex(42) = {'gex\_F\_obs'};
+M_.endo_names_long(42) = {'gex_F_obs'};
 M_.endo_partitions = struct();
 M_.param_names = cell(39,1);
 M_.param_names_tex = cell(39,1);
@@ -290,10 +299,19 @@ M_.param_names_long(39) = {'rho_r'};
 M_.param_partitions = struct();
 M_.exo_det_nbr = 0;
 M_.exo_nbr = 9;
-M_.endo_nbr = 39;
+M_.endo_nbr = 42;
 M_.param_nbr = 39;
-M_.orig_endo_nbr = 39;
+M_.orig_endo_nbr = 42;
 M_.aux_vars = [];
+options_.varobs = cell(7, 1);
+options_.varobs(1)  = {'gy_H_obs'};
+options_.varobs(2)  = {'gy_F_obs'};
+options_.varobs(3)  = {'pi_H_obs'};
+options_.varobs(4)  = {'pi_F_obs'};
+options_.varobs(5)  = {'r_F_obs'};
+options_.varobs(6)  = {'gex_H_obs'};
+options_.varobs(7)  = {'gex_F_obs'};
+options_.varobs_id = [ 36 37 38 39 40 41 42  ];
 M_.Sigma_e = zeros(9, 9);
 M_.Correlation_matrix = eye(9, 9);
 M_.H = 0;
@@ -313,7 +331,7 @@ options_.bytecode = false;
 options_.use_dll = false;
 options_.ramsey_policy = false;
 options_.discretionary_policy = false;
-M_.eq_nbr = 39;
+M_.eq_nbr = 42;
 M_.ramsey_orig_eq_nbr = 0;
 M_.ramsey_orig_endo_nbr = 0;
 M_.set_auxiliary_variables = exist(['./+' M_.fname '/set_auxiliary_variables.m'], 'file') == 2;
@@ -329,34 +347,32 @@ M_.orig_maximum_lag = 1;
 M_.orig_maximum_lead = 1;
 M_.orig_maximum_lag_with_diffs_expanded = 1;
 M_.lead_lag_incidence = [
- 1 19 58;
- 0 20 59;
- 0 21 60;
- 0 22 0;
- 0 23 0;
+ 1 21 63;
+ 0 22 64;
+ 0 23 65;
  0 24 0;
- 2 25 61;
- 3 26 0;
- 4 27 0;
- 0 28 62;
- 0 29 0;
- 5 30 63;
- 0 31 64;
- 0 32 65;
- 0 33 0;
- 0 34 0;
+ 0 25 0;
+ 0 26 0;
+ 2 27 66;
+ 3 28 0;
+ 4 29 0;
+ 0 30 67;
+ 5 31 0;
+ 6 32 68;
+ 0 33 69;
+ 0 34 70;
  0 35 0;
- 6 36 66;
- 7 37 0;
- 0 38 0;
- 0 39 67;
+ 0 36 0;
+ 0 37 0;
+ 7 38 71;
+ 8 39 0;
  0 40 0;
- 8 41 0;
+ 0 41 72;
  9 42 0;
- 0 43 0;
- 0 44 0;
- 10 45 0;
- 11 46 0;
+ 10 43 0;
+ 11 44 0;
+ 0 45 0;
+ 0 46 0;
  12 47 0;
  13 48 0;
  14 49 0;
@@ -364,58 +380,66 @@ M_.lead_lag_incidence = [
  16 51 0;
  17 52 0;
  18 53 0;
- 0 54 0;
- 0 55 0;
+ 19 54 0;
+ 20 55 0;
  0 56 0;
- 0 57 0;]';
-M_.nstatic = 15;
+ 0 57 0;
+ 0 58 0;
+ 0 59 0;
+ 0 60 0;
+ 0 61 0;
+ 0 62 0;]';
+M_.nstatic = 16;
 M_.nfwrd   = 6;
-M_.npred   = 14;
+M_.npred   = 16;
 M_.nboth   = 4;
 M_.nsfwrd   = 10;
-M_.nspred   = 18;
-M_.ndynamic   = 24;
+M_.nspred   = 20;
+M_.ndynamic   = 26;
 M_.dynamic_tmp_nbr = [19; 9; 0; 0; ];
 M_.equations_tags = {
-  1 , 'name' , 'FOC consommation' ;
+  1 , 'name' , 'lb_H' ;
   2 , 'name' , 'lb_F' ;
-  3 , 'name' , 'Equation d Euler (taux unique r en UEM)' ;
+  3 , 'name' , '3' ;
   4 , 'name' , '4' ;
-  5 , 'name' , 'Offre de travail' ;
+  5 , 'name' , '5' ;
   6 , 'name' , '6' ;
-  7 , 'name' , 'NKPC Rotemberg Home' ;
-  8 , 'name' , 'NKPC Rotemberg Foreign' ;
-  9 , 'name' , 'FOC travail entreprise' ;
+  7 , 'name' , '7' ;
+  8 , 'name' , '8' ;
+  9 , 'name' , 'mc_H' ;
   10 , 'name' , 'mc_F' ;
-  11 , 'name' , 'Production' ;
+  11 , 'name' , 'y_H' ;
   12 , 'name' , 'y_F' ;
-  13 , 'name' , 'Indice de prix CES' ;
+  13 , 'name' , '13' ;
   14 , 'name' , '14' ;
-  15 , 'name' , 'Prix relatif' ;
+  15 , 'name' , '15' ;
   16 , 'name' , '16' ;
-  17 , 'name' , 'Marche biens Home' ;
-  18 , 'name' , 'Marche biens Foreign' ;
-  19 , 'name' , 'Aggregat inflation UEM HICP (GDP weighted)' ;
-  20 , 'name' , 'Aggregat activite UEM' ;
-  21 , 'name' , 'Regle BCE unique (lissee)' ;
-  22 , 'name' , 'Accumulation NFA (Home)' ;
-  23 , 'name' , 'Bouclage international' ;
-  24 , 'name' , 'Taux de change reel (intra-UEM = differentiel d inflation)' ;
-  25 , 'name' , 'Exports FR vers DE' ;
-  26 , 'name' , 'Exports DE vers FR' ;
-  27 , 'name' , 'mesure : croissance PIB FR' ;
-  28 , 'name' , 'mesure : croissance PIB DE' ;
-  29 , 'name' , 'mesure : inflation HICP FR (deviation cible)' ;
-  30 , 'name' , 'mesure : inflation HICP DE (deviation cible)' ;
-  31 , 'name' , '31' ;
-  32 , 'name' , '32' ;
-  33 , 'name' , '33' ;
+  17 , 'name' , '17' ;
+  18 , 'name' , '18' ;
+  19 , 'name' , 'pi_UEM' ;
+  20 , 'name' , 'y_UEM' ;
+  21 , 'name' , 'r' ;
+  22 , 'name' , 'NFA_H' ;
+  23 , 'name' , '23' ;
+  24 , 'name' , '24' ;
+  25 , 'name' , 'ex_H' ;
+  26 , 'name' , 'ex_F' ;
+  27 , 'name' , 'gy_H_obs' ;
+  28 , 'name' , 'gy_F_obs' ;
+  29 , 'name' , 'pi_H_obs' ;
+  30 , 'name' , 'pi_F_obs' ;
+  31 , 'name' , 'r_F_obs' ;
+  32 , 'name' , 'gex_H_obs' ;
+  33 , 'name' , 'gex_F_obs' ;
   34 , 'name' , '34' ;
   35 , 'name' , '35' ;
   36 , 'name' , '36' ;
   37 , 'name' , '37' ;
   38 , 'name' , '38' ;
   39 , 'name' , '39' ;
+  40 , 'name' , '40' ;
+  41 , 'name' , '41' ;
+  42 , 'name' , '42' ;
 };
 M_.mapping.c_H.eqidx = [1 7 17 18 22 26 ];
 M_.mapping.pic_H.eqidx = [3 15 19 22 29 ];
@@ -427,7 +451,7 @@ M_.mapping.y_H.eqidx = [7 9 11 17 20 27 ];
 M_.mapping.p_H.eqidx = [13 15 17 22 25 ];
 M_.mapping.NFA_H.eqidx = [17 22 23 ];
 M_.mapping.lb_H.eqidx = [1 3 5 ];
-M_.mapping.ex_H.eqidx = [25 ];
+M_.mapping.ex_H.eqidx = [25 32 ];
 M_.mapping.c_F.eqidx = [2 8 17 18 22 25 ];
 M_.mapping.pic_F.eqidx = [4 16 19 30 ];
 M_.mapping.pi_F.eqidx = [8 16 18 24 ];
@@ -438,40 +462,43 @@ M_.mapping.y_F.eqidx = [8 10 12 18 20 28 ];
 M_.mapping.p_F.eqidx = [14 16 18 26 ];
 M_.mapping.NFA_F.eqidx = [18 23 ];
 M_.mapping.lb_F.eqidx = [2 4 6 ];
-M_.mapping.ex_F.eqidx = [26 ];
-M_.mapping.r.eqidx = [3 4 21 22 ];
+M_.mapping.ex_F.eqidx = [26 33 ];
+M_.mapping.r.eqidx = [3 4 21 22 31 ];
 M_.mapping.rer.eqidx = [13 14 17 18 22 24 25 26 ];
 M_.mapping.pi_UEM.eqidx = [19 21 ];
 M_.mapping.y_UEM.eqidx = [20 21 ];
-M_.mapping.e_z_H.eqidx = [11 31 ];
-M_.mapping.e_p_H.eqidx = [7 32 ];
-M_.mapping.e_x_H.eqidx = [18 25 33 ];
-M_.mapping.e_g_H.eqidx = [17 34 ];
-M_.mapping.e_z_F.eqidx = [12 35 ];
-M_.mapping.e_p_F.eqidx = [8 36 ];
-M_.mapping.e_x_F.eqidx = [17 22 26 37 ];
-M_.mapping.e_g_F.eqidx = [18 38 ];
-M_.mapping.e_r.eqidx = [21 39 ];
+M_.mapping.e_z_H.eqidx = [11 34 ];
+M_.mapping.e_p_H.eqidx = [7 35 ];
+M_.mapping.e_x_H.eqidx = [18 25 36 ];
+M_.mapping.e_g_H.eqidx = [17 37 ];
+M_.mapping.e_z_F.eqidx = [12 38 ];
+M_.mapping.e_p_F.eqidx = [8 39 ];
+M_.mapping.e_x_F.eqidx = [17 22 26 40 ];
+M_.mapping.e_g_F.eqidx = [18 41 ];
+M_.mapping.e_r.eqidx = [21 42 ];
 M_.mapping.gy_H_obs.eqidx = [27 ];
 M_.mapping.gy_F_obs.eqidx = [28 ];
 M_.mapping.pi_H_obs.eqidx = [29 ];
 M_.mapping.pi_F_obs.eqidx = [30 ];
-M_.mapping.eta_z_H.eqidx = [31 ];
-M_.mapping.eta_p_H.eqidx = [32 ];
-M_.mapping.eta_x_H.eqidx = [33 ];
-M_.mapping.eta_g_H.eqidx = [34 ];
-M_.mapping.eta_z_F.eqidx = [35 ];
-M_.mapping.eta_p_F.eqidx = [36 ];
-M_.mapping.eta_x_F.eqidx = [37 ];
-M_.mapping.eta_g_F.eqidx = [38 ];
-M_.mapping.eta_r.eqidx = [39 ];
+M_.mapping.r_F_obs.eqidx = [31 ];
+M_.mapping.gex_H_obs.eqidx = [32 ];
+M_.mapping.gex_F_obs.eqidx = [33 ];
+M_.mapping.eta_z_H.eqidx = [34 ];
+M_.mapping.eta_p_H.eqidx = [35 ];
+M_.mapping.eta_x_H.eqidx = [36 ];
+M_.mapping.eta_g_H.eqidx = [37 ];
+M_.mapping.eta_z_F.eqidx = [38 ];
+M_.mapping.eta_p_F.eqidx = [39 ];
+M_.mapping.eta_x_F.eqidx = [40 ];
+M_.mapping.eta_g_F.eqidx = [41 ];
+M_.mapping.eta_r.eqidx = [42 ];
 M_.static_and_dynamic_models_differ = false;
 M_.has_external_function = false;
 M_.block_structure.time_recursive = false;
 M_.block_structure.block(1).Simulation_Type = 3;
 M_.block_structure.block(1).endo_nbr = 1;
 M_.block_structure.block(1).mfs = 1;
-M_.block_structure.block(1).equation = [ 31];
+M_.block_structure.block(1).equation = [ 34];
 M_.block_structure.block(1).variable = [ 27];
 M_.block_structure.block(1).is_linear = false;
 M_.block_structure.block(1).NNZDerivatives = 2;
@@ -479,7 +506,7 @@ M_.block_structure.block(1).bytecode_jacob_cols_to_sparse = [0 1 ];
 M_.block_structure.block(2).Simulation_Type = 3;
 M_.block_structure.block(2).endo_nbr = 1;
 M_.block_structure.block(2).mfs = 1;
-M_.block_structure.block(2).equation = [ 32];
+M_.block_structure.block(2).equation = [ 35];
 M_.block_structure.block(2).variable = [ 28];
 M_.block_structure.block(2).is_linear = false;
 M_.block_structure.block(2).NNZDerivatives = 2;
@@ -487,7 +514,7 @@ M_.block_structure.block(2).bytecode_jacob_cols_to_sparse = [0 1 ];
 M_.block_structure.block(3).Simulation_Type = 3;
 M_.block_structure.block(3).endo_nbr = 1;
 M_.block_structure.block(3).mfs = 1;
-M_.block_structure.block(3).equation = [ 33];
+M_.block_structure.block(3).equation = [ 36];
 M_.block_structure.block(3).variable = [ 29];
 M_.block_structure.block(3).is_linear = false;
 M_.block_structure.block(3).NNZDerivatives = 2;
@@ -495,7 +522,7 @@ M_.block_structure.block(3).bytecode_jacob_cols_to_sparse = [0 1 ];
 M_.block_structure.block(4).Simulation_Type = 3;
 M_.block_structure.block(4).endo_nbr = 1;
 M_.block_structure.block(4).mfs = 1;
-M_.block_structure.block(4).equation = [ 34];
+M_.block_structure.block(4).equation = [ 37];
 M_.block_structure.block(4).variable = [ 30];
 M_.block_structure.block(4).is_linear = false;
 M_.block_structure.block(4).NNZDerivatives = 2;
@@ -503,7 +530,7 @@ M_.block_structure.block(4).bytecode_jacob_cols_to_sparse = [0 1 ];
 M_.block_structure.block(5).Simulation_Type = 3;
 M_.block_structure.block(5).endo_nbr = 1;
 M_.block_structure.block(5).mfs = 1;
-M_.block_structure.block(5).equation = [ 35];
+M_.block_structure.block(5).equation = [ 38];
 M_.block_structure.block(5).variable = [ 31];
 M_.block_structure.block(5).is_linear = false;
 M_.block_structure.block(5).NNZDerivatives = 2;
@@ -511,7 +538,7 @@ M_.block_structure.block(5).bytecode_jacob_cols_to_sparse = [0 1 ];
 M_.block_structure.block(6).Simulation_Type = 3;
 M_.block_structure.block(6).endo_nbr = 1;
 M_.block_structure.block(6).mfs = 1;
-M_.block_structure.block(6).equation = [ 36];
+M_.block_structure.block(6).equation = [ 39];
 M_.block_structure.block(6).variable = [ 32];
 M_.block_structure.block(6).is_linear = false;
 M_.block_structure.block(6).NNZDerivatives = 2;
@@ -519,7 +546,7 @@ M_.block_structure.block(6).bytecode_jacob_cols_to_sparse = [0 1 ];
 M_.block_structure.block(7).Simulation_Type = 3;
 M_.block_structure.block(7).endo_nbr = 1;
 M_.block_structure.block(7).mfs = 1;
-M_.block_structure.block(7).equation = [ 37];
+M_.block_structure.block(7).equation = [ 40];
 M_.block_structure.block(7).variable = [ 33];
 M_.block_structure.block(7).is_linear = false;
 M_.block_structure.block(7).NNZDerivatives = 2;
@@ -527,7 +554,7 @@ M_.block_structure.block(7).bytecode_jacob_cols_to_sparse = [0 1 ];
 M_.block_structure.block(8).Simulation_Type = 3;
 M_.block_structure.block(8).endo_nbr = 1;
 M_.block_structure.block(8).mfs = 1;
-M_.block_structure.block(8).equation = [ 38];
+M_.block_structure.block(8).equation = [ 41];
 M_.block_structure.block(8).variable = [ 34];
 M_.block_structure.block(8).is_linear = false;
 M_.block_structure.block(8).NNZDerivatives = 2;
@@ -535,7 +562,7 @@ M_.block_structure.block(8).bytecode_jacob_cols_to_sparse = [0 1 ];
 M_.block_structure.block(9).Simulation_Type = 3;
 M_.block_structure.block(9).endo_nbr = 1;
 M_.block_structure.block(9).mfs = 1;
-M_.block_structure.block(9).equation = [ 39];
+M_.block_structure.block(9).equation = [ 42];
 M_.block_structure.block(9).variable = [ 35];
 M_.block_structure.block(9).is_linear = false;
 M_.block_structure.block(9).NNZDerivatives = 2;
@@ -543,19 +570,19 @@ M_.block_structure.block(9).bytecode_jacob_cols_to_sparse = [0 1 ];
 M_.block_structure.block(10).Simulation_Type = 8;
 M_.block_structure.block(10).endo_nbr = 24;
 M_.block_structure.block(10).mfs = 21;
-M_.block_structure.block(10).equation = [ 10 9 19 11 12 21 23 6 5 13 14 18 22 4 17 1 15 16 20 24 8 7 2 3];
-M_.block_structure.block(10).variable = [ 15 4 25 6 17 26 20 16 5 8 19 24 9 23 12 1 2 13 18 3 14 7 21 10];
+M_.block_structure.block(10).equation = [ 10 9 19 11 12 21 23 6 5 13 14 18 22 4 17 1 15 16 20 24 2 8 7 3];
+M_.block_structure.block(10).variable = [ 15 4 25 6 17 26 20 16 5 8 19 24 9 23 12 1 2 13 18 3 21 14 7 10];
 M_.block_structure.block(10).is_linear = false;
 M_.block_structure.block(10).NNZDerivatives = 93;
 M_.block_structure.block(10).bytecode_jacob_cols_to_sparse = [7 8 9 10 11 12 13 0 0 0 22 23 24 25 26 27 28 29 30 31 32 33 34 35 36 37 38 39 40 41 42 54 55 56 57 58 59 60 61 62 63 ];
 M_.block_structure.block(11).Simulation_Type = 1;
-M_.block_structure.block(11).endo_nbr = 6;
-M_.block_structure.block(11).mfs = 6;
-M_.block_structure.block(11).equation = [ 30 29 28 27 26 25];
-M_.block_structure.block(11).variable = [ 39 38 37 36 22 11];
+M_.block_structure.block(11).endo_nbr = 9;
+M_.block_structure.block(11).mfs = 9;
+M_.block_structure.block(11).equation = [ 26 25 33 32 31 30 29 28 27];
+M_.block_structure.block(11).variable = [ 22 11 42 41 40 39 38 37 36];
 M_.block_structure.block(11).is_linear = true;
-M_.block_structure.block(11).NNZDerivatives = 6;
-M_.block_structure.block(11).bytecode_jacob_cols_to_sparse = [7 8 9 10 11 12 ];
+M_.block_structure.block(11).NNZDerivatives = 13;
+M_.block_structure.block(11).bytecode_jacob_cols_to_sparse = [1 2 10 11 12 13 14 15 16 17 18 ];
 M_.block_structure.block(1).g1_sparse_rowval = int32([1 ]);
 M_.block_structure.block(1).g1_sparse_colval = int32([1 ]);
 M_.block_structure.block(1).g1_sparse_colptr = int32([1 2 ]);
@@ -583,14 +610,14 @@ M_.block_structure.block(8).g1_sparse_colptr = int32([1 2 ]);
 M_.block_structure.block(9).g1_sparse_rowval = int32([1 ]);
 M_.block_structure.block(9).g1_sparse_colval = int32([1 ]);
 M_.block_structure.block(9).g1_sparse_colptr = int32([1 2 ]);
-M_.block_structure.block(10).g1_sparse_rowval = int32([14 15 17 10 3 10 18 20 13 19 1 6 19 2 5 18 3 16 4 9 5 18 6 19 7 10 12 14 8 9 15 7 8 9 10 12 17 4 10 12 3 11 21 9 10 12 18 20 9 10 12 13 19 3 10 14 3 15 2 9 16 18 12 14 17 19 9 15 17 18 1 12 16 19 5 11 20 6 13 21 18 19 21 11 18 19 18 19 11 21 ]);
-M_.block_structure.block(10).g1_sparse_colval = int32([7 8 9 10 11 11 12 12 13 13 22 22 22 23 23 23 24 24 25 25 26 26 27 27 28 28 28 28 29 29 29 30 30 30 30 30 30 31 31 31 32 32 32 33 33 33 33 33 34 34 34 34 34 35 35 35 36 36 37 37 37 37 38 38 38 38 39 39 39 39 40 40 40 40 41 41 41 42 42 42 54 55 56 57 58 59 60 61 62 63 ]);
-M_.block_structure.block(10).g1_sparse_colptr = int32([1 1 1 1 1 1 1 2 3 4 5 7 9 11 11 11 11 11 11 11 11 11 14 17 19 21 23 25 29 32 38 41 44 49 54 57 59 63 67 71 75 78 81 81 81 81 81 81 81 81 81 81 81 81 82 83 84 85 86 87 88 89 90 91 ]);
+M_.block_structure.block(10).g1_sparse_rowval = int32([14 15 17 10 3 10 18 19 13 20 1 6 20 2 5 19 3 16 4 9 5 19 6 20 7 10 12 14 8 9 15 7 8 9 10 12 17 4 10 12 3 11 21 9 10 12 18 19 9 10 12 13 20 3 10 14 3 15 2 9 16 19 12 14 17 20 5 11 18 9 15 17 19 1 12 16 20 6 13 21 19 20 21 11 19 20 11 19 20 21 ]);
+M_.block_structure.block(10).g1_sparse_colval = int32([7 8 9 10 11 11 12 12 13 13 22 22 22 23 23 23 24 24 25 25 26 26 27 27 28 28 28 28 29 29 29 30 30 30 30 30 30 31 31 31 32 32 32 33 33 33 33 33 34 34 34 34 34 35 35 35 36 36 37 37 37 37 38 38 38 38 39 39 39 40 40 40 40 41 41 41 41 42 42 42 54 55 56 57 58 59 60 61 62 63 ]);
+M_.block_structure.block(10).g1_sparse_colptr = int32([1 1 1 1 1 1 1 2 3 4 5 7 9 11 11 11 11 11 11 11 11 11 14 17 19 21 23 25 29 32 38 41 44 49 54 57 59 63 67 70 74 78 81 81 81 81 81 81 81 81 81 81 81 81 82 83 84 85 86 87 88 89 90 91 ]);
 M_.block_structure.block(11).g1_sparse_rowval = int32([]);
 M_.block_structure.block(11).g1_sparse_colval = int32([]);
 M_.block_structure.block(11).g1_sparse_colptr = int32([]);
-M_.block_structure.variable_reordered = [ 27 28 29 30 31 32 33 34 35 15 4 25 6 17 26 20 16 5 8 19 24 9 23 12 1 2 13 18 3 14 7 21 10 39 38 37 36 22 11];
-M_.block_structure.equation_reordered = [ 31 32 33 34 35 36 37 38 39 10 9 19 11 12 21 23 6 5 13 14 18 22 4 17 1 15 16 20 24 8 7 2 3 30 29 28 27 26 25];
+M_.block_structure.variable_reordered = [ 27 28 29 30 31 32 33 34 35 15 4 25 6 17 26 20 16 5 8 19 24 9 23 12 1 2 13 18 3 21 14 7 10 22 11 42 41 40 39 38 37 36];
+M_.block_structure.equation_reordered = [ 34 35 36 37 38 39 40 41 42 10 9 19 11 12 21 23 6 5 13 14 18 22 4 17 1 15 16 20 24 2 8 7 3 26 25 33 32 31 30 29 28 27];
 M_.block_structure.incidence(1).lead_lag = -1;
 M_.block_structure.incidence(1).sparse_IM = [
  1 1;
@@ -605,15 +632,17 @@ M_.block_structure.incidence(1).sparse_IM = [
  24 24;
  27 7;
  28 18;
- 31 27;
- 32 28;
- 33 29;
- 34 30;
- 35 31;
- 36 32;
- 37 33;
- 38 34;
- 39 35;
+ 32 11;
+ 33 22;
+ 34 27;
+ 35 28;
+ 36 29;
+ 37 30;
+ 38 31;
+ 39 32;
+ 40 33;
+ 41 34;
+ 42 35;
 ];
 M_.block_structure.incidence(2).lead_lag = 0;
 M_.block_structure.incidence(2).sparse_IM = [
@@ -723,15 +752,21 @@ M_.block_structure.incidence(2).sparse_IM = [
  29 38;
  30 13;
  30 39;
- 31 27;
- 32 28;
- 33 29;
- 34 30;
- 35 31;
- 36 32;
- 37 33;
- 38 34;
- 39 35;
+ 31 23;
+ 31 40;
+ 32 11;
+ 32 41;
+ 33 22;
+ 33 42;
+ 34 27;
+ 35 28;
+ 36 29;
+ 37 30;
+ 38 31;
+ 39 32;
+ 40 33;
+ 41 34;
+ 42 35;
 ];
 M_.block_structure.incidence(3).lead_lag = 1;
 M_.block_structure.incidence(3).sparse_IM = [
@@ -747,21 +782,21 @@ M_.block_structure.incidence(3).sparse_IM = [
  8 18;
 ];
 M_.block_structure.dyn_tmp_nbr = 28;
-M_.state_var = [27 28 29 30 31 32 33 34 35 8 19 24 9 23 12 1 18 7 ];
+M_.state_var = [27 28 29 30 31 32 33 34 35 8 19 24 9 23 12 1 18 7 22 11 ];
 M_.maximum_lag = 1;
 M_.maximum_lead = 1;
 M_.maximum_endo_lag = 1;
 M_.maximum_endo_lead = 1;
-oo_.steady_state = zeros(39, 1);
+oo_.steady_state = zeros(42, 1);
 M_.maximum_exo_lag = 0;
 M_.maximum_exo_lead = 0;
 oo_.exo_steady_state = zeros(9, 1);
 M_.params = NaN(39, 1);
-M_.endo_trends = struct('deflator', cell(39, 1), 'log_deflator', cell(39, 1), 'growth_factor', cell(39, 1), 'log_growth_factor', cell(39, 1));
-M_.NNZDerivatives = [155; -1; -1; ];
-M_.dynamic_g1_sparse_rowval = int32([1 7 27 15 22 2 8 28 16 21 22 24 31 32 33 34 35 36 37 38 39 1 7 17 18 22 26 15 19 22 29 7 15 17 24 7 9 5 9 5 9 11 7 9 11 17 20 27 13 15 17 22 25 17 22 23 1 3 5 25 2 8 17 18 22 25 16 19 30 8 16 18 24 8 10 6 10 6 10 12 8 10 12 18 20 28 14 16 18 26 18 23 2 4 6 26 3 4 21 13 14 17 18 22 24 25 26 19 21 20 21 11 31 7 32 18 25 33 17 34 12 35 8 36 17 22 26 37 18 38 21 39 27 28 29 30 7 3 7 7 3 8 4 8 8 4 31 32 33 34 35 36 37 38 39 ]);
-M_.dynamic_g1_sparse_colval = int32([1 1 7 8 9 12 12 18 19 23 23 24 27 28 29 30 31 32 33 34 35 40 40 40 40 40 40 41 41 41 41 42 42 42 42 43 43 44 44 45 45 45 46 46 46 46 46 46 47 47 47 47 47 48 48 48 49 49 49 50 51 51 51 51 51 51 52 52 52 53 53 53 53 54 54 55 55 56 56 56 57 57 57 57 57 57 58 58 58 58 59 59 60 60 60 61 62 62 62 63 63 63 63 63 63 63 63 64 64 65 65 66 66 67 67 68 68 68 69 69 70 70 71 71 72 72 72 72 73 73 74 74 75 76 77 78 79 80 81 85 88 90 91 92 96 99 118 119 120 121 122 123 124 125 126 ]);
-M_.dynamic_g1_sparse_colptr = int32([1 3 3 3 3 3 3 4 5 6 6 6 8 8 8 8 8 8 9 10 10 10 10 12 13 13 13 14 15 16 17 18 19 20 21 22 22 22 22 22 28 32 36 38 40 43 49 54 57 60 61 67 70 74 76 78 81 87 91 93 96 97 100 108 110 112 114 116 119 121 123 125 129 131 133 134 135 136 137 138 139 140 140 140 140 141 141 141 142 142 143 144 145 145 145 145 146 146 146 147 147 147 147 147 147 147 147 147 147 147 147 147 147 147 147 147 147 147 148 149 150 151 152 153 154 155 156 ]);
+M_.endo_trends = struct('deflator', cell(42, 1), 'log_deflator', cell(42, 1), 'growth_factor', cell(42, 1), 'log_growth_factor', cell(42, 1));
+M_.NNZDerivatives = [163; -1; -1; ];
+M_.dynamic_g1_sparse_rowval = int32([1 7 27 15 22 32 2 8 28 16 33 21 22 24 34 35 36 37 38 39 40 41 42 1 7 17 18 22 26 15 19 22 29 7 15 17 24 7 9 5 9 5 9 11 7 9 11 17 20 27 13 15 17 22 25 17 22 23 1 3 5 25 32 2 8 17 18 22 25 16 19 30 8 16 18 24 8 10 6 10 6 10 12 8 10 12 18 20 28 14 16 18 26 18 23 2 4 6 26 33 3 4 21 31 13 14 17 18 22 24 25 26 19 21 20 21 11 34 7 35 18 25 36 17 37 12 38 8 39 17 22 26 40 18 41 21 42 27 28 29 30 31 32 33 7 3 7 7 3 8 4 8 8 4 34 35 36 37 38 39 40 41 42 ]);
+M_.dynamic_g1_sparse_colval = int32([1 1 7 8 9 11 12 12 18 19 22 23 23 24 27 28 29 30 31 32 33 34 35 43 43 43 43 43 43 44 44 44 44 45 45 45 45 46 46 47 47 48 48 48 49 49 49 49 49 49 50 50 50 50 50 51 51 51 52 52 52 53 53 54 54 54 54 54 54 55 55 55 56 56 56 56 57 57 58 58 59 59 59 60 60 60 60 60 60 61 61 61 61 62 62 63 63 63 64 64 65 65 65 65 66 66 66 66 66 66 66 66 67 67 68 68 69 69 70 70 71 71 71 72 72 73 73 74 74 75 75 75 75 76 76 77 77 78 79 80 81 82 83 84 85 86 87 91 94 96 97 98 102 105 127 128 129 130 131 132 133 134 135 ]);
+M_.dynamic_g1_sparse_colptr = int32([1 3 3 3 3 3 3 4 5 6 6 7 9 9 9 9 9 9 10 11 11 11 12 14 15 15 15 16 17 18 19 20 21 22 23 24 24 24 24 24 24 24 24 30 34 38 40 42 45 51 56 59 62 64 70 73 77 79 81 84 90 94 96 99 101 105 113 115 117 119 121 124 126 128 130 134 136 138 139 140 141 142 143 144 145 146 147 148 148 148 148 149 149 149 150 150 151 152 153 153 153 153 154 154 154 155 155 155 155 155 155 155 155 155 155 155 155 155 155 155 155 155 155 155 155 155 155 156 157 158 159 160 161 162 163 164 ]);
 M_.lhs = {
 'lb_H'; 
 'lb_F'; 
@@ -793,6 +828,9 @@ M_.lhs = {
 'gy_F_obs'; 
 'pi_H_obs'; 
 'pi_F_obs'; 
+'r_F_obs'; 
+'gex_H_obs'; 
+'gex_F_obs'; 
 'log(e_z_H)'; 
 'log(e_p_H)'; 
 'log(e_x_H)'; 
@@ -805,67 +843,67 @@ M_.lhs = {
 };
 M_.static_tmp_nbr = [14; 5; 0; 0; ];
 M_.block_structure_stat.block(1).Simulation_Type = 1;
-M_.block_structure_stat.block(1).endo_nbr = 2;
-M_.block_structure_stat.block(1).mfs = 2;
-M_.block_structure_stat.block(1).equation = [ 27 28];
-M_.block_structure_stat.block(1).variable = [ 36 37];
+M_.block_structure_stat.block(1).endo_nbr = 4;
+M_.block_structure_stat.block(1).mfs = 4;
+M_.block_structure_stat.block(1).equation = [ 27 28 32 33];
+M_.block_structure_stat.block(1).variable = [ 36 37 41 42];
 M_.block_structure_stat.block(2).Simulation_Type = 3;
 M_.block_structure_stat.block(2).endo_nbr = 1;
 M_.block_structure_stat.block(2).mfs = 1;
-M_.block_structure_stat.block(2).equation = [ 31];
+M_.block_structure_stat.block(2).equation = [ 34];
 M_.block_structure_stat.block(2).variable = [ 27];
 M_.block_structure_stat.block(3).Simulation_Type = 3;
 M_.block_structure_stat.block(3).endo_nbr = 1;
 M_.block_structure_stat.block(3).mfs = 1;
-M_.block_structure_stat.block(3).equation = [ 32];
+M_.block_structure_stat.block(3).equation = [ 35];
 M_.block_structure_stat.block(3).variable = [ 28];
 M_.block_structure_stat.block(4).Simulation_Type = 3;
 M_.block_structure_stat.block(4).endo_nbr = 1;
 M_.block_structure_stat.block(4).mfs = 1;
-M_.block_structure_stat.block(4).equation = [ 33];
+M_.block_structure_stat.block(4).equation = [ 36];
 M_.block_structure_stat.block(4).variable = [ 29];
 M_.block_structure_stat.block(5).Simulation_Type = 3;
 M_.block_structure_stat.block(5).endo_nbr = 1;
 M_.block_structure_stat.block(5).mfs = 1;
-M_.block_structure_stat.block(5).equation = [ 34];
+M_.block_structure_stat.block(5).equation = [ 37];
 M_.block_structure_stat.block(5).variable = [ 30];
 M_.block_structure_stat.block(6).Simulation_Type = 3;
 M_.block_structure_stat.block(6).endo_nbr = 1;
 M_.block_structure_stat.block(6).mfs = 1;
-M_.block_structure_stat.block(6).equation = [ 35];
+M_.block_structure_stat.block(6).equation = [ 38];
 M_.block_structure_stat.block(6).variable = [ 31];
 M_.block_structure_stat.block(7).Simulation_Type = 3;
 M_.block_structure_stat.block(7).endo_nbr = 1;
 M_.block_structure_stat.block(7).mfs = 1;
-M_.block_structure_stat.block(7).equation = [ 36];
+M_.block_structure_stat.block(7).equation = [ 39];
 M_.block_structure_stat.block(7).variable = [ 32];
 M_.block_structure_stat.block(8).Simulation_Type = 3;
 M_.block_structure_stat.block(8).endo_nbr = 1;
 M_.block_structure_stat.block(8).mfs = 1;
-M_.block_structure_stat.block(8).equation = [ 37];
+M_.block_structure_stat.block(8).equation = [ 40];
 M_.block_structure_stat.block(8).variable = [ 33];
 M_.block_structure_stat.block(9).Simulation_Type = 3;
 M_.block_structure_stat.block(9).endo_nbr = 1;
 M_.block_structure_stat.block(9).mfs = 1;
-M_.block_structure_stat.block(9).equation = [ 38];
+M_.block_structure_stat.block(9).equation = [ 41];
 M_.block_structure_stat.block(9).variable = [ 34];
 M_.block_structure_stat.block(10).Simulation_Type = 3;
 M_.block_structure_stat.block(10).endo_nbr = 1;
 M_.block_structure_stat.block(10).mfs = 1;
-M_.block_structure_stat.block(10).equation = [ 39];
+M_.block_structure_stat.block(10).equation = [ 42];
 M_.block_structure_stat.block(10).variable = [ 35];
 M_.block_structure_stat.block(11).Simulation_Type = 6;
 M_.block_structure_stat.block(11).endo_nbr = 24;
 M_.block_structure_stat.block(11).mfs = 24;
-M_.block_structure_stat.block(11).equation = [ 12 13 14 15 16 17 18 19 20 21 22 23 24 11 10 1 2 9 8 3 4 5 6 7];
-M_.block_structure_stat.block(11).variable = [ 17 8 19 2 14 1 24 25 18 26 9 20 3 6 16 10 12 7 15 23 13 5 21 4];
+M_.block_structure_stat.block(11).equation = [ 14 15 16 17 18 19 20 21 22 23 24 13 12 1 2 11 10 9 3 4 5 6 7 8];
+M_.block_structure_stat.block(11).variable = [ 19 2 14 1 24 13 26 25 9 20 3 8 18 10 12 6 16 7 23 21 5 17 4 15];
 M_.block_structure_stat.block(12).Simulation_Type = 1;
-M_.block_structure_stat.block(12).endo_nbr = 4;
-M_.block_structure_stat.block(12).mfs = 4;
-M_.block_structure_stat.block(12).equation = [ 30 29 26 25];
-M_.block_structure_stat.block(12).variable = [ 39 38 22 11];
-M_.block_structure_stat.variable_reordered = [ 36 37 27 28 29 30 31 32 33 34 35 17 8 19 2 14 1 24 25 18 26 9 20 3 6 16 10 12 7 15 23 13 5 21 4 39 38 22 11];
-M_.block_structure_stat.equation_reordered = [ 27 28 31 32 33 34 35 36 37 38 39 12 13 14 15 16 17 18 19 20 21 22 23 24 11 10 1 2 9 8 3 4 5 6 7 30 29 26 25];
+M_.block_structure_stat.block(12).endo_nbr = 5;
+M_.block_structure_stat.block(12).mfs = 5;
+M_.block_structure_stat.block(12).equation = [ 31 30 29 26 25];
+M_.block_structure_stat.block(12).variable = [ 40 39 38 22 11];
+M_.block_structure_stat.variable_reordered = [ 36 37 41 42 27 28 29 30 31 32 33 34 35 19 2 14 1 24 13 26 25 9 20 3 8 18 10 12 6 16 7 23 21 5 17 4 15 40 39 38 22 11];
+M_.block_structure_stat.equation_reordered = [ 27 28 32 33 34 35 36 37 38 39 40 41 42 14 15 16 17 18 19 20 21 22 23 24 13 12 1 2 11 10 9 3 4 5 6 7 8 31 30 29 26 25];
 M_.block_structure_stat.incidence.sparse_IM = [
  1 1;
  1 10;
@@ -965,15 +1003,18 @@ M_.block_structure_stat.incidence.sparse_IM = [
  29 38;
  30 13;
  30 39;
- 31 27;
- 32 28;
- 33 29;
- 34 30;
- 35 31;
- 36 32;
- 37 33;
- 38 34;
- 39 35;
+ 31 40;
+ 32 41;
+ 33 42;
+ 34 27;
+ 35 28;
+ 36 29;
+ 37 30;
+ 38 31;
+ 39 32;
+ 40 33;
+ 41 34;
+ 42 35;
 ];
 M_.block_structure_stat.tmp_nbr = 27;
 M_.block_structure_stat.block(1).g1_sparse_rowval = int32([]);
@@ -1006,15 +1047,15 @@ M_.block_structure_stat.block(9).g1_sparse_colptr = int32([1 2 ]);
 M_.block_structure_stat.block(10).g1_sparse_rowval = int32([1 ]);
 M_.block_structure_stat.block(10).g1_sparse_colval = int32([1 ]);
 M_.block_structure_stat.block(10).g1_sparse_colptr = int32([1 2 ]);
-M_.block_structure_stat.block(11).g1_sparse_rowval = int32([1 15 23 2 6 11 3 7 4 8 11 20 5 7 13 19 6 7 11 16 2 3 6 7 11 8 10 1 7 9 15 9 10 11 12 12 4 6 13 24 14 18 22 15 23 16 20 22 6 7 11 17 6 9 14 18 15 19 10 11 20 21 5 8 21 18 22 17 21 23 18 24 ]);
-M_.block_structure_stat.block(11).g1_sparse_colval = int32([1 1 1 2 2 2 3 3 4 4 4 4 5 5 5 5 6 6 6 6 7 7 7 7 7 8 8 9 9 9 9 10 10 11 11 12 13 13 13 13 14 14 14 15 15 16 16 16 17 17 17 17 18 18 18 18 19 19 20 20 20 20 21 21 21 22 22 23 23 23 24 24 ]);
-M_.block_structure_stat.block(11).g1_sparse_colptr = int32([1 4 7 9 13 17 21 26 28 32 34 36 37 41 44 46 49 53 57 59 63 66 68 71 73 ]);
+M_.block_structure_stat.block(11).g1_sparse_rowval = int32([1 5 2 6 9 19 3 5 11 24 4 5 9 14 1 4 5 9 12 3 6 20 7 8 6 8 9 10 10 2 4 11 23 4 9 12 5 7 13 17 14 19 21 4 5 9 15 16 18 21 17 22 4 7 16 18 8 9 19 20 15 20 22 18 21 13 17 22 18 23 17 24 ]);
+M_.block_structure_stat.block(11).g1_sparse_colval = int32([1 1 2 2 2 2 3 3 3 3 4 4 4 4 5 5 5 5 5 6 6 6 7 7 8 8 9 9 10 11 11 11 11 12 12 12 13 13 13 13 14 14 14 15 15 15 15 16 16 16 17 17 18 18 18 18 19 19 19 19 20 20 20 21 21 22 22 22 23 23 24 24 ]);
+M_.block_structure_stat.block(11).g1_sparse_colptr = int32([1 3 7 11 15 20 23 25 27 29 30 34 37 41 44 48 51 53 57 61 64 66 69 71 73 ]);
 M_.block_structure_stat.block(12).g1_sparse_rowval = int32([]);
 M_.block_structure_stat.block(12).g1_sparse_colval = int32([]);
 M_.block_structure_stat.block(12).g1_sparse_colptr = int32([]);
-M_.static_g1_sparse_rowval = int32([1 17 18 22 26 3 15 19 22 29 7 15 17 24 7 9 5 9 5 9 11 9 11 17 20 13 17 22 25 22 23 1 3 5 25 2 17 18 22 25 4 16 19 30 8 16 18 24 8 10 6 10 6 10 12 10 12 18 20 14 18 26 23 2 4 6 26 3 4 21 22 13 14 17 18 22 25 26 19 21 20 21 11 31 7 32 18 25 33 17 34 12 35 8 36 17 22 26 37 18 38 21 39 27 28 29 30 ]);
-M_.static_g1_sparse_colval = int32([1 1 1 1 1 2 2 2 2 2 3 3 3 3 4 4 5 5 6 6 6 7 7 7 7 8 8 8 8 9 9 10 10 10 11 12 12 12 12 12 13 13 13 13 14 14 14 14 15 15 16 16 17 17 17 18 18 18 18 19 19 19 20 21 21 21 22 23 23 23 23 24 24 24 24 24 24 24 25 25 26 26 27 27 28 28 29 29 29 30 30 31 31 32 32 33 33 33 33 34 34 35 35 36 37 38 39 ]);
-M_.static_g1_sparse_colptr = int32([1 6 11 15 17 19 22 26 30 32 35 36 41 45 49 51 53 56 60 63 64 67 68 72 79 81 83 85 87 90 92 94 96 100 102 104 105 106 107 108 ]);
+M_.static_g1_sparse_rowval = int32([1 17 18 22 26 3 15 19 22 29 7 15 17 24 7 9 5 9 5 9 11 9 11 17 20 13 17 22 25 22 23 1 3 5 25 2 17 18 22 25 4 16 19 30 8 16 18 24 8 10 6 10 6 10 12 10 12 18 20 14 18 26 23 2 4 6 26 3 4 21 22 13 14 17 18 22 25 26 19 21 20 21 11 34 7 35 18 25 36 17 37 12 38 8 39 17 22 26 40 18 41 21 42 27 28 29 30 31 32 33 ]);
+M_.static_g1_sparse_colval = int32([1 1 1 1 1 2 2 2 2 2 3 3 3 3 4 4 5 5 6 6 6 7 7 7 7 8 8 8 8 9 9 10 10 10 11 12 12 12 12 12 13 13 13 13 14 14 14 14 15 15 16 16 17 17 17 18 18 18 18 19 19 19 20 21 21 21 22 23 23 23 23 24 24 24 24 24 24 24 25 25 26 26 27 27 28 28 29 29 29 30 30 31 31 32 32 33 33 33 33 34 34 35 35 36 37 38 39 40 41 42 ]);
+M_.static_g1_sparse_colptr = int32([1 6 11 15 17 19 22 26 30 32 35 36 41 45 49 51 53 56 60 63 64 67 68 72 79 81 83 85 87 90 92 94 96 100 102 104 105 106 107 108 109 110 111 ]);
 close all;
 M_.params(1) = 1.5;
 sigmaC_H = M_.params(1);
@@ -1026,14 +1067,14 @@ M_.params(4) = 2.0;
 sigmaH_F = M_.params(4);
 M_.params(5) = 0.995;
 beta = M_.params(5);
+M_.params(6) = 0.65;
+alpha = M_.params(6);
 M_.params(7) = 0.7;
 hc_H = M_.params(7);
 M_.params(8) = 0.7;
 hc_F = M_.params(8);
-M_.params(6) = 0.65;
-alpha = M_.params(6);
-M_.params(30) = 0.3333333333333333;
-Hss = M_.params(30);
+M_.params(9) = 1e-3;
+chi_B = M_.params(9);
 M_.params(12) = 80;
 xi_H = M_.params(12);
 M_.params(13) = 100;
@@ -1052,8 +1093,6 @@ M_.params(21) = 0.40;
 n = M_.params(21);
 M_.params(28) = 2.85;
 y0 = M_.params(28);
-M_.params(9) = 1e-3;
-chi_B = M_.params(9);
 M_.params(22) = 0.85;
 rho = M_.params(22);
 M_.params(23) = 1.5;
@@ -1066,6 +1105,8 @@ M_.params(26) = 0.24;
 gy_H = M_.params(26);
 M_.params(27) = 0.20;
 gy_F = M_.params(27);
+M_.params(30) = 0.3333333333333333;
+Hss = M_.params(30);
 M_.params(31) = 0.95;
 rho_z_H = M_.params(31);
 M_.params(35) = 0.95;
@@ -1084,33 +1125,135 @@ M_.params(38) = 0.85;
 rho_g_F = M_.params(38);
 M_.params(39) = 0.50;
 rho_r = M_.params(39);
+steady;
 options_resid_ = struct();
 display_static_residuals(M_, options_, oo_, options_resid_);
-steady;
 oo_.dr.eigval = check(M_,options_,oo_);
 %
 % SHOCKS instructions
 %
 M_.exo_det_length = 0;
-M_.Sigma_e(1, 1) = (0.007)^2;
 M_.Sigma_e(2, 2) = (0.005)^2;
-M_.Sigma_e(3, 3) = (0.01)^2;
-M_.Sigma_e(4, 4) = (0.01)^2;
-M_.Sigma_e(5, 5) = (0.007)^2;
+M_.Sigma_e(4, 4) = (0.005)^2;
 M_.Sigma_e(6, 6) = (0.015)^2;
-M_.Sigma_e(7, 7) = (0.01)^2;
-M_.Sigma_e(8, 8) = (0.01)^2;
-M_.Sigma_e(9, 9) = (0.002)^2;
+M_.Sigma_e(8, 8) = (0.005)^2;
 M_.Sigma_e(2, 6) = 0.7*sqrt(M_.Sigma_e(2, 2)*M_.Sigma_e(6, 6));
 M_.Sigma_e(6, 2) = M_.Sigma_e(2, 6);
 M_.Correlation_matrix(2, 6) = 0.7;
 M_.Correlation_matrix(6, 2) = M_.Correlation_matrix(2, 6);
 M_.sigma_e_is_diagonal = 0;
+if isempty(estim_params_)
+    estim_params_.var_exo = zeros(0, 10);
+    estim_params_.var_endo = zeros(0, 10);
+    estim_params_.corrx = zeros(0, 11);
+    estim_params_.corrn = zeros(0, 11);
+    estim_params_.param_vals = zeros(0, 10);
+end
+if ~isempty(find(estim_params_.param_vals(:,1)==12))
+    error('Parameter xi_H has been specified twice in two concatenated ''estimated_params'' blocks. Depending on your intention, you may want to use the ''overwrite'' option or an ''estimated_params_remove'' block.')
+end
+estim_params_.param_vals = [estim_params_.param_vals; 12, 80, 10, 500, 2, 80, 20, NaN, NaN, NaN ];
+if ~isempty(find(estim_params_.param_vals(:,1)==13))
+    error('Parameter xi_F has been specified twice in two concatenated ''estimated_params'' blocks. Depending on your intention, you may want to use the ''overwrite'' option or an ''estimated_params_remove'' block.')
+end
+estim_params_.param_vals = [estim_params_.param_vals; 13, 100, 10, 500, 2, 100, 20, NaN, NaN, NaN ];
+if ~isempty(find(estim_params_.param_vals(:,1)==7))
+    error('Parameter hc_H has been specified twice in two concatenated ''estimated_params'' blocks. Depending on your intention, you may want to use the ''overwrite'' option or an ''estimated_params_remove'' block.')
+end
+estim_params_.param_vals = [estim_params_.param_vals; 7, 0.7, 0, 0.99, 1, 0.7, 0.1, NaN, NaN, NaN ];
+if ~isempty(find(estim_params_.param_vals(:,1)==8))
+    error('Parameter hc_F has been specified twice in two concatenated ''estimated_params'' blocks. Depending on your intention, you may want to use the ''overwrite'' option or an ''estimated_params_remove'' block.')
+end
+estim_params_.param_vals = [estim_params_.param_vals; 8, 0.7, 0, 0.99, 1, 0.7, 0.1, NaN, NaN, NaN ];
+if ~isempty(find(estim_params_.param_vals(:,1)==1))
+    error('Parameter sigmaC_H has been specified twice in two concatenated ''estimated_params'' blocks. Depending on your intention, you may want to use the ''overwrite'' option or an ''estimated_params_remove'' block.')
+end
+estim_params_.param_vals = [estim_params_.param_vals; 1, 1.5, 0.5, 5, 3, 1.5, 0.35, NaN, NaN, NaN ];
+if ~isempty(find(estim_params_.param_vals(:,1)==2))
+    error('Parameter sigmaC_F has been specified twice in two concatenated ''estimated_params'' blocks. Depending on your intention, you may want to use the ''overwrite'' option or an ''estimated_params_remove'' block.')
+end
+estim_params_.param_vals = [estim_params_.param_vals; 2, 1.5, 0.5, 5, 3, 1.5, 0.35, NaN, NaN, NaN ];
+if ~isempty(find(estim_params_.param_vals(:,1)==22))
+    error('Parameter rho has been specified twice in two concatenated ''estimated_params'' blocks. Depending on your intention, you may want to use the ''overwrite'' option or an ''estimated_params_remove'' block.')
+end
+estim_params_.param_vals = [estim_params_.param_vals; 22, 0.85, 0, 0.99, 1, 0.8, 0.1, NaN, NaN, NaN ];
+if ~isempty(find(estim_params_.param_vals(:,1)==23))
+    error('Parameter phi_pi has been specified twice in two concatenated ''estimated_params'' blocks. Depending on your intention, you may want to use the ''overwrite'' option or an ''estimated_params_remove'' block.')
+end
+estim_params_.param_vals = [estim_params_.param_vals; 23, 1.5, 1, 3, 2, 1.5, 0.25, NaN, NaN, NaN ];
+if ~isempty(find(estim_params_.param_vals(:,1)==24))
+    error('Parameter phi_y has been specified twice in two concatenated ''estimated_params'' blocks. Depending on your intention, you may want to use the ''overwrite'' option or an ''estimated_params_remove'' block.')
+end
+estim_params_.param_vals = [estim_params_.param_vals; 24, 0.125, 0, 1, 2, 0.125, 0.05, NaN, NaN, NaN ];
+if ~isempty(find(estim_params_.param_vals(:,1)==31))
+    error('Parameter rho_z_H has been specified twice in two concatenated ''estimated_params'' blocks. Depending on your intention, you may want to use the ''overwrite'' option or an ''estimated_params_remove'' block.')
+end
+estim_params_.param_vals = [estim_params_.param_vals; 31, 0.95, 0, 0.99, 1, 0.7, 0.15, NaN, NaN, NaN ];
+if ~isempty(find(estim_params_.param_vals(:,1)==35))
+    error('Parameter rho_z_F has been specified twice in two concatenated ''estimated_params'' blocks. Depending on your intention, you may want to use the ''overwrite'' option or an ''estimated_params_remove'' block.')
+end
+estim_params_.param_vals = [estim_params_.param_vals; 35, 0.95, 0, 0.99, 1, 0.7, 0.15, NaN, NaN, NaN ];
+if ~isempty(find(estim_params_.param_vals(:,1)==33))
+    error('Parameter rho_x_H has been specified twice in two concatenated ''estimated_params'' blocks. Depending on your intention, you may want to use the ''overwrite'' option or an ''estimated_params_remove'' block.')
+end
+estim_params_.param_vals = [estim_params_.param_vals; 33, 0.85, 0, 0.99, 1, 0.6, 0.2, NaN, NaN, NaN ];
+if ~isempty(find(estim_params_.param_vals(:,1)==37))
+    error('Parameter rho_x_F has been specified twice in two concatenated ''estimated_params'' blocks. Depending on your intention, you may want to use the ''overwrite'' option or an ''estimated_params_remove'' block.')
+end
+estim_params_.param_vals = [estim_params_.param_vals; 37, 0.85, 0, 0.99, 1, 0.6, 0.2, NaN, NaN, NaN ];
+if ~isempty(find(estim_params_.param_vals(:,1)==39))
+    error('Parameter rho_r has been specified twice in two concatenated ''estimated_params'' blocks. Depending on your intention, you may want to use the ''overwrite'' option or an ''estimated_params_remove'' block.')
+end
+estim_params_.param_vals = [estim_params_.param_vals; 39, 0.50, 0, 0.99, 1, 0.5, 0.2, NaN, NaN, NaN ];
+if ~isempty(find(estim_params_.var_exo(:,1)==1))
+    error('The standard deviation for eta_z_H has been specified twice in two concatenated ''estimated_params'' blocks. Depending on your intention, you may want to use the ''overwrite'' option or an ''estimated_params_remove'' block.')
+end
+estim_params_.var_exo = [estim_params_.var_exo; 1, 0.007, NaN, NaN, 4, 0.01, 2, NaN, NaN, NaN ];
+if ~isempty(find(estim_params_.var_exo(:,1)==5))
+    error('The standard deviation for eta_z_F has been specified twice in two concatenated ''estimated_params'' blocks. Depending on your intention, you may want to use the ''overwrite'' option or an ''estimated_params_remove'' block.')
+end
+estim_params_.var_exo = [estim_params_.var_exo; 5, 0.007, NaN, NaN, 4, 0.01, 2, NaN, NaN, NaN ];
+if ~isempty(find(estim_params_.var_exo(:,1)==3))
+    error('The standard deviation for eta_x_H has been specified twice in two concatenated ''estimated_params'' blocks. Depending on your intention, you may want to use the ''overwrite'' option or an ''estimated_params_remove'' block.')
+end
+estim_params_.var_exo = [estim_params_.var_exo; 3, 0.01, NaN, NaN, 4, 0.01, 2, NaN, NaN, NaN ];
+if ~isempty(find(estim_params_.var_exo(:,1)==7))
+    error('The standard deviation for eta_x_F has been specified twice in two concatenated ''estimated_params'' blocks. Depending on your intention, you may want to use the ''overwrite'' option or an ''estimated_params_remove'' block.')
+end
+estim_params_.var_exo = [estim_params_.var_exo; 7, 0.01, NaN, NaN, 4, 0.01, 2, NaN, NaN, NaN ];
+if ~isempty(find(estim_params_.var_exo(:,1)==9))
+    error('The standard deviation for eta_r has been specified twice in two concatenated ''estimated_params'' blocks. Depending on your intention, you may want to use the ''overwrite'' option or an ''estimated_params_remove'' block.')
+end
+estim_params_.var_exo = [estim_params_.var_exo; 9, 0.002, NaN, NaN, 4, 0.005, 2, NaN, NaN, NaN ];
+options_.datafile = '../data/myobs_FR_DE.mat';
+options_.first_obs = 1;
+options_.forecast = 8;
+options_.lik_init = 2;
+options_.mh_jscale = 0.45;
+options_.mh_nblck = 2;
+options_.mh_replic = 5000;
+options_.mode_compute = 4;
+options_.prefilter = 1;
+options_.order = 1;
+var_list_ = {'gy_H_obs';'gy_F_obs';'pi_H_obs';'pi_F_obs';'r_F_obs';'gex_H_obs';'gex_F_obs'};
+oo_recursive_=dynare_estimation(var_list_);
+fn = fieldnames(oo_.posterior_mean.parameters);
+for ix = 1:size(fn,1)
+set_param_value(fn{ix}, eval(['oo_.posterior_mean.parameters.' fn{ix}]));
+end
+fx = fieldnames(oo_.posterior_mean.shocks_std);
+for ix = 1:size(fx,1)
+idx = strmatch(fx{ix}, M_.exo_names, 'exact');
+M_.Sigma_e(idx,idx) = eval(['oo_.posterior_mean.shocks_std.' fx{ix}])^2;
+end
+options_.conditional_variance_decomposition = [1;4;10;100;];
 options_.irf = 20;
 options_.nograph = true;
 options_.order = 1;
-var_list_ = {'y_H';'y_F';'c_H';'c_F';'pi_H';'pi_F';'pic_H';'pic_F';'pi_UEM';'r';'rer';'ex_H';'ex_F';'NFA_H'};
+var_list_ = {'gy_H_obs';'gy_F_obs';'pi_H_obs';'pi_F_obs';'pi_UEM';'r';'rer';'ex_H';'ex_F';'NFA_H'};
 [info, oo_, options_, M_] = stoch_simul(M_, options_, oo_, var_list_);
+var_list_ = {'gy_H_obs';'gy_F_obs';'pi_H_obs';'pi_F_obs'};
+oo_ = shock_decomposition(M_,oo_,options_,var_list_,bayestopt_,estim_params_);
 
 
 oo_.time = toc(tic0);
@@ -1118,27 +1261,27 @@ disp(['Total computing time : ' dynsec2hms(oo_.time) ]);
 if ~exist([M_.dname filesep 'Output'],'dir')
     mkdir(M_.dname,'Output');
 end
-save([M_.dname filesep 'Output' filesep 'two_countries_UEM_results.mat'], 'oo_', 'M_', 'options_');
+save([M_.dname filesep 'Output' filesep 'estimation_UEM_results.mat'], 'oo_', 'M_', 'options_');
 if exist('estim_params_', 'var') == 1
-  save([M_.dname filesep 'Output' filesep 'two_countries_UEM_results.mat'], 'estim_params_', '-append');
+  save([M_.dname filesep 'Output' filesep 'estimation_UEM_results.mat'], 'estim_params_', '-append');
 end
 if exist('bayestopt_', 'var') == 1
-  save([M_.dname filesep 'Output' filesep 'two_countries_UEM_results.mat'], 'bayestopt_', '-append');
+  save([M_.dname filesep 'Output' filesep 'estimation_UEM_results.mat'], 'bayestopt_', '-append');
 end
 if exist('dataset_', 'var') == 1
-  save([M_.dname filesep 'Output' filesep 'two_countries_UEM_results.mat'], 'dataset_', '-append');
+  save([M_.dname filesep 'Output' filesep 'estimation_UEM_results.mat'], 'dataset_', '-append');
 end
 if exist('estimation_info', 'var') == 1
-  save([M_.dname filesep 'Output' filesep 'two_countries_UEM_results.mat'], 'estimation_info', '-append');
+  save([M_.dname filesep 'Output' filesep 'estimation_UEM_results.mat'], 'estimation_info', '-append');
 end
 if exist('dataset_info', 'var') == 1
-  save([M_.dname filesep 'Output' filesep 'two_countries_UEM_results.mat'], 'dataset_info', '-append');
+  save([M_.dname filesep 'Output' filesep 'estimation_UEM_results.mat'], 'dataset_info', '-append');
 end
 if exist('oo_recursive_', 'var') == 1
-  save([M_.dname filesep 'Output' filesep 'two_countries_UEM_results.mat'], 'oo_recursive_', '-append');
+  save([M_.dname filesep 'Output' filesep 'estimation_UEM_results.mat'], 'oo_recursive_', '-append');
 end
 if exist('options_mom_', 'var') == 1
-  save([M_.dname filesep 'Output' filesep 'two_countries_UEM_results.mat'], 'options_mom_', '-append');
+  save([M_.dname filesep 'Output' filesep 'estimation_UEM_results.mat'], 'options_mom_', '-append');
 end
 if ~isempty(lastwarn)
   disp('Note: warning(s) encountered in MATLAB/Octave code')

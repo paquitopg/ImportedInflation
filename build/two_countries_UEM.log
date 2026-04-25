@@ -1,0 +1,202 @@
+Starting Dynare (version 6.5).
+Calling Dynare with arguments: noclearall
+Starting preprocessing of the model file ...
+Found 39 equation(s).
+Evaluating expressions...
+Computing static model derivatives (order 1).
+Normalizing the static model...
+Finding the optimal block decomposition of the static model...
+12 block(s) found:
+  11 recursive block(s) and 1 simultaneous block(s).
+  the largest simultaneous block has 24 equation(s)
+                                 and 24 feedback variable(s).
+Computing dynamic model derivatives (order 1).
+Normalizing the dynamic model...
+Finding the optimal block decomposition of the dynamic model...
+11 block(s) found:
+  10 recursive block(s) and 1 simultaneous block(s).
+  the largest simultaneous block has 24 equation(s)
+                                 and 21 feedback variable(s).
+Preprocessing completed.
+Preprocessing time: 0h00m00s.
+
+
+Residuals of the static equations:
+Equation number  1: FOC consommation                                           :       0.000000
+Equation number  2: lb_F                                                       :       0.000000
+Equation number  3: Equation d Euler (taux unique r en UEM)                    :       0.000000
+Equation number  4: 4                                                          :       0.000000
+Equation number  5: Offre de travail                                           :       0.000000
+Equation number  6: 6                                                          :       0.000000
+Equation number  7: NKPC Rotemberg Home                                        :       0.000000
+Equation number  8: NKPC Rotemberg Foreign                                     :       0.000000
+Equation number  9: FOC travail entreprise                                     :       0.000000
+Equation number 10: mc_F                                                       :       0.000000
+Equation number 11: Production                                                 :       0.000000
+Equation number 12: y_F                                                        :       0.000000
+Equation number 13: Indice de prix CES                                         :       0.000000
+Equation number 14: 14                                                         :       0.000000
+Equation number 15: Prix relatif                                               :       0.000000
+Equation number 16: 16                                                         :       0.000000
+Equation number 17: Marche biens Home                                          :       0.000000
+Equation number 18: Marche biens Foreign                                       :       0.000000
+Equation number 19: Aggregat inflation UEM HICP (GDP weighted)                 :       0.000000
+Equation number 20: Aggregat activite UEM                                      :       0.000000
+Equation number 21: Regle BCE unique (lissee)                                  :       0.000000
+Equation number 22: Accumulation NFA (Home)                                    :       0.000000
+Equation number 23: Bouclage international                                     :       0.000000
+Equation number 24: Taux de change reel (intra-UEM = differentiel d inflation) :       0.000000
+Equation number 25: Exports FR vers DE                                         :       0.000000
+Equation number 26: Exports DE vers FR                                         :       0.000000
+Equation number 27: mesure : croissance PIB FR                                 :       0.000000
+Equation number 28: mesure : croissance PIB DE                                 :       0.000000
+Equation number 29: mesure : inflation HICP FR (deviation cible)               :       0.000000
+Equation number 30: mesure : inflation HICP DE (deviation cible)               :       0.000000
+Equation number 31: 31                                                         :       0.000000
+Equation number 32: 32                                                         :       0.000000
+Equation number 33: 33                                                         :       0.000000
+Equation number 34: 34                                                         :       0.000000
+Equation number 35: 35                                                         :       0.000000
+Equation number 36: 36                                                         :       0.000000
+Equation number 37: 37                                                         :       0.000000
+Equation number 38: 38                                                         :       0.000000
+Equation number 39: 39                                                         :       0.000000
+
+
+[Warning: Some of the parameters have no value (chi_H, chi_F, phi_H, phi_F, A) when using
+steady. If these parameters are not initialized in a steadystate file or a
+steady_state_model-block, Dynare may not be able to solve the model. Note that simul,
+perfect_foresight_setup, and perfect_foresight_solver do not automatically call the steady
+state file.] 
+
+STEADY-STATE RESULTS:
+
+c_H      		 5.96821
+pic_H    		 1.005
+pi_H     		 1.005
+mc_H     		 0.9
+w_H      		 12.5044
+h_H      		 0.333333
+y_H      		 7.125
+p_H      		 1
+NFA_H    		 110.089
+lb_H     		 0.4174
+ex_H     		 0.1497
+c_F      		 5.33119
+pic_F    		 1.005
+pi_F     		 1.005
+mc_F     		 0.9
+w_F      		 12.5044
+h_F      		 0.333333
+y_F      		 7.125
+p_F      		 1
+NFA_F    		 -73.3925
+lb_F     		 0.494403
+ex_F     		 0.370984
+r        		 1.01005
+rer      		 1
+pi_UEM   		 1.005
+y_UEM    		 7.125
+e_z_H    		 1
+e_p_H    		 1
+e_x_H    		 1
+e_g_H    		 1
+e_z_F    		 1
+e_p_F    		 1
+e_x_F    		 1
+e_g_F    		 1
+e_r      		 1
+gy_H_obs 		 0
+gy_F_obs 		 0
+pi_H_obs 		 0
+pi_F_obs 		 0
+
+EIGENVALUES:
+         Modulus             Real        Imaginary
+               0                0                0
+               0                0                0
+       5.383e-17       -5.383e-17                0
+        1.49e-16         1.49e-16                0
+             0.5              0.5                0
+          0.6215           0.5986            0.167
+          0.6215           0.5986           -0.167
+          0.6349           0.6258           0.1073
+          0.6349           0.6258          -0.1073
+            0.85             0.85                0
+            0.85             0.85                0
+            0.85             0.85                0
+            0.85             0.85                0
+             0.9              0.9                0
+            0.95             0.95                0
+            0.95             0.95                0
+            0.95             0.95                0
+               1                1                0
+           1.005            1.005                0
+           1.077            1.077                0
+           1.434            1.434                0
+           1.749            1.749                0
+       2.264e+16       -2.264e+16                0
+       3.485e+16       -3.485e+16                0
+       5.224e+16        5.224e+16                0
+       5.936e+16        5.936e+16                0
+       2.933e+19        2.933e+19                0
+       2.985e+19       -2.985e+19                0
+
+There are 10 eigenvalue(s) larger than 1 in modulus for 10 forward-looking variable(s)
+The rank condition is verified.
+
+
+MODEL SUMMARY
+
+  Number of variables:         39
+  Number of stochastic shocks: 9
+  Number of state variables:   18
+  Number of jumpers:           10
+  Number of static variables:  15
+
+
+MATRIX OF COVARIANCE OF EXOGENOUS SHOCKS
+Variables     eta_z_H   eta_p_H   eta_x_H   eta_g_H   eta_z_F   eta_p_F   eta_x_F   eta_g_F     eta_r
+eta_z_H      0.000049  0.000000  0.000000  0.000000  0.000000  0.000000  0.000000  0.000000  0.000000
+eta_p_H      0.000000  0.000025  0.000000  0.000000  0.000000  0.000052  0.000000  0.000000  0.000000
+eta_x_H      0.000000  0.000000  0.000100  0.000000  0.000000  0.000000  0.000000  0.000000  0.000000
+eta_g_H      0.000000  0.000000  0.000000  0.000100  0.000000  0.000000  0.000000  0.000000  0.000000
+eta_z_F      0.000000  0.000000  0.000000  0.000000  0.000049  0.000000  0.000000  0.000000  0.000000
+eta_p_F      0.000000  0.000052  0.000000  0.000000  0.000000  0.000225  0.000000  0.000000  0.000000
+eta_x_F      0.000000  0.000000  0.000000  0.000000  0.000000  0.000000  0.000100  0.000000  0.000000
+eta_g_F      0.000000  0.000000  0.000000  0.000000  0.000000  0.000000  0.000000  0.000100  0.000000
+eta_r        0.000000  0.000000  0.000000  0.000000  0.000000  0.000000  0.000000  0.000000  0.000004
+
+POLICY AND TRANSITION FUNCTIONS
+                                 y_H             y_F             c_H             c_F            pi_H            pi_F           pic_H           pic_F          pi_UEM               r             rer            ex_H            ex_F           NFA_H
+Constant                    7.125000        7.125000        5.968210        5.331193        1.005000        1.005000        1.005000        1.005000        1.005000        1.010050        1.000000        0.149700        0.370984      110.088805
+p_H(-1)                    -0.277272       -0.355368       -0.504168       -0.205953       -0.179058       -0.099373        0.840603       -0.103286        0.274270        0.061159        0.079289        0.015297       -0.077628      -92.395393
+NFA_H(-1)                  -0.000198        0.000211        0.002567       -0.001607        0.000710       -0.000392        0.000507       -0.000338               0               0       -0.001096       -0.000337        0.000799        0.947533
+p_F(-1)                    -0.448558       -0.498286       -0.332331       -0.574323       -0.151397       -0.213751       -0.162869        0.794311        0.411439        0.091767       -0.062044       -0.032622        0.015563       17.876115
+r(-1)                      -2.817700       -3.083193       -1.791832       -3.755298       -0.866402       -1.375145       -0.960007       -1.350167       -1.194103        0.572064       -0.506212       -0.240033        0.184145      214.708246
+rer(-1)                     1.411822       -0.977820        0.107245       -0.123189        0.217378       -0.137508        0.336994       -0.169427        0.033141        0.007436        0.646880        0.168524       -0.370981      -36.440085
+e_z_H(-1)                   1.929478       -0.463182        0.842976        0.247537       -0.658292       -0.071614       -0.550348       -0.100419       -0.280391       -0.062092        0.583759        0.162152       -0.288398       61.093579
+e_p_H(-1)                  -0.366915        0.098203       -0.152401       -0.042138        0.130060        0.015064        0.108902        0.020710        0.055987        0.012427       -0.114424       -0.031605        0.057327      -12.089671
+e_x_H(-1)                   0.025970        0.433133       -0.025787       -0.058511       -0.000197        0.025153        0.004467        0.023909        0.016132        0.004366        0.025224        0.132308       -0.016329       -0.465191
+e_g_H(-1)                   1.151115        0.056698       -0.128263       -0.057228        0.089983       -0.002916        0.072890        0.001645        0.030143        0.008131       -0.092437       -0.026183        0.045992       -8.106615
+e_z_F(-1)                  -0.603192        1.590854        0.383134        0.944570       -0.099649       -0.585121       -0.188972       -0.561286       -0.412360       -0.091351       -0.483058       -0.101905        0.305823       20.299168
+e_p_F(-1)                   0.130692       -0.344685       -0.083012       -0.204657        0.021591        0.126776        0.040944        0.121612        0.089345        0.019793        0.104662        0.022079       -0.066262       -4.398153
+e_x_F(-1)                   0.251527        0.012841       -0.022804       -0.015823        0.021150       -0.001442        0.016993       -0.000333        0.006597        0.001780       -0.022480       -0.006421        0.327042       -1.574071
+e_g_F(-1)                   0.059852        0.998234       -0.059430       -0.134850       -0.000454        0.057970        0.010296        0.055102        0.037179        0.010063        0.058133        0.011669       -0.037632       -1.072117
+e_r(-1)                    -2.959108       -3.302105       -2.138728       -3.839005       -1.195215       -1.626985       -1.274657       -1.605786       -1.473335        0.163447       -0.429622       -0.222021        0.117869      139.936676
+c_H(-1)                     0.493306        0.087060        0.655430       -0.020356        0.032539        0.003775        0.027247        0.005187        0.014011        0.003832       -0.028621       -0.008181        0.057451       -3.133267
+c_F(-1)                     0.075538        0.577370       -0.025967        0.644447        0.004393        0.029925        0.009091        0.028672        0.020839        0.005714        0.025405        0.024850       -0.016446       -0.924637
+eta_z_H                     2.031029       -0.487560        0.887343        0.260566       -0.692939       -0.075384       -0.579314       -0.105704       -0.295148       -0.065360        0.614483        0.170687       -0.303577       64.309030
+eta_p_H                    -0.407684        0.109114       -0.169334       -0.046820        0.144511        0.016737        0.121002        0.023011        0.062207        0.013808       -0.127138       -0.035116        0.063697      -13.432967
+eta_x_H                     0.030553        0.509568       -0.030337       -0.068837       -0.000232        0.029592        0.005256        0.028128        0.018979        0.005137        0.029675        0.155657       -0.019210       -0.547283
+eta_g_H                     1.354252        0.066703       -0.150897       -0.067327        0.105862       -0.003431        0.085753        0.001935        0.035462        0.009565       -0.108750       -0.030803        0.054108       -9.537194
+eta_z_F                    -0.634939        1.674584        0.403299        0.994285       -0.104893       -0.615917       -0.198918       -0.590827       -0.434063       -0.096159       -0.508482       -0.107268        0.321919       21.367546
+eta_p_F                     0.137570       -0.362826       -0.087381       -0.215428        0.022727        0.133449        0.043099        0.128013        0.094047        0.020835        0.110171        0.023241       -0.069749       -4.629635
+eta_x_F                     0.295914        0.015107       -0.026828       -0.018615        0.024882       -0.001697        0.019992       -0.000392        0.007762        0.002094       -0.026447       -0.007554        0.384756       -1.851848
+eta_g_F                     0.070415        1.174393       -0.069918       -0.158647       -0.000534        0.068200        0.012113        0.064826        0.043740        0.011839        0.068392        0.013728       -0.044273       -1.261314
+eta_r                      -5.918217       -6.604211       -4.277457       -7.678010       -2.390430       -3.253970       -2.549315       -3.211572       -2.946669        0.326893       -0.859244       -0.444042        0.235738      279.873353
+
+All endogenous are constant or non stationary, not displaying correlations and auto-correlations
+
+Total computing time : 0h00m00s
+Note: warning(s) encountered in MATLAB/Octave code

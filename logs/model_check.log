@@ -1,50 +1,51 @@
 ==============================================================
   MODEL CHECK  -  two_countries_UEM.mod
 ==============================================================
-Run date     : 2026-04-23 00:18:05
+Run date     : 2026-04-25 10:32:11
 Model file   : /Users/pacogoze/Desktop/ENSAE/S2/MacroModelling/projet/ImportedInflation/src/two_countries_UEM.mod
-Dynare run   : ECHEC
+Dynare run   : OK
 --------------------------------------------------------------
 
 1) RESIDUS AU STEADY-STATE
-   max|residu|   = NaN
+   max|residu|   = 7.105e-15
    Tolerance     = 1.000e-08
-   Conclusion    : ECHEC (recalibrer SS)
+   Conclusion    : OK (steady-state consistant)
 
 2) CONDITION DE BLANCHARD-KAHN
-   # valeurs propres > 1  : NaN
-   # variables forward    : NaN  (M_.nfwrd + M_.nboth)
-   stoch_simul execute    : non
-   Conclusion    : ECHEC (indetermination)
+   # valeurs propres > 1  : 10
+   # variables forward    : 10  (M_.nfwrd + M_.nboth)
+   stoch_simul execute    : oui
+   Conclusion    : OK (equilibre determine)
 
 3) IRF : choc energie Allemagne (eta_p_F = +1 sigma = +0.015)
 
    Variable |      t=1 |      t=4 |      t=8 |     t=12
    ---------+----------+----------+----------+----------
-   pic_F    |       NA |       NA |       NA |       NA |
-   pic_H    |       NA |       NA |       NA |       NA |
-   pi_UEM   |       NA |       NA |       NA |       NA |
-   y_F      |       NA |       NA |       NA |       NA |
-   y_H      |       NA |       NA |       NA |       NA |
-   rer      |       NA |       NA |       NA |       NA |
-   r        |       NA |       NA |       NA |       NA |
-   ex_H     |       NA |       NA |       NA |       NA |
-   ex_F     |       NA |       NA |       NA |       NA |
-   NFA_H    |       NA |       NA |       NA |       NA |
+   pic_F    |  +0.0014 |  +0.0003 |  +0.0001 |  +0.0001 |
+   pic_H    |  +0.0005 |  +0.0003 |  +0.0002 |  +0.0002 |
+   pi_UEM   |  +0.0010 |  +0.0003 |  +0.0002 |  +0.0001 |
+   y_F      |  -0.0039 |  -0.0102 |  -0.0103 |  -0.0085 |
+   y_H      |  +0.0015 |  +0.0016 |  +0.0010 |  +0.0008 |
+   c_H      |  -0.0009 |  -0.0026 |  -0.0022 |  -0.0015 |
+   c_F      |  -0.0023 |  -0.0075 |  -0.0082 |  -0.0070 |
+   rer      |  +0.0012 |  +0.0021 |  +0.0017 |  +0.0013 |
+   r        |  +0.0002 |  +0.0004 |  +0.0003 |  +0.0002 |
+   ex_H     |  +0.0002 |  +0.0003 |  +0.0002 |  +0.0001 |
+   ex_F     |  -0.0007 |  -0.0014 |  -0.0011 |  -0.0008 |
+   NFA_H    |  -0.0496 |  -0.0459 |  -0.0003 |  +0.0203 |
 
    Tests de signe attendus (cost-push DE) :
-     [NON] pic_F > 0 a t=1
-     [NON] pic_H > 0 a t=4
-     [NON] pi_UEM > 0 a t=1
-     [NON] y_F < 0 a t=1
-     [NON] y_H < 0 a t=4
-     [NON] rer > 0 a t=1
-     [NON] r > 0 a t=4
-   0 / 7 tests passes.
-   Conclusion    : Signes IRF a verifier (cf. raw log)
+     [OK] pic_F > 0 a t=1
+     [OK] pic_H > 0 a t=4
+     [OK] pi_UEM > 0 a t=1
+     [OK] y_F < 0 a t=1
+     [OK] c_H < 0 a t=4
+     [OK] rer > 0 a t=1
+     [OK] r > 0 a t=4
+   7 / 7 tests passes.
+   Conclusion    : Signes IRF conformes a la theorie
 
 --------------------------------------------------------------
-ERREUR : The steadystate file did not compute the steady state
-VERDICT : MODEL A REVOIR
+VERDICT : MODEL OK
 ==============================================================
 Sortie brute Dynare : logs/model_check_raw.log
