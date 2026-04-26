@@ -1,0 +1,83 @@
+\begin{thebibliography}{12}
+\providecommand{\natexlab}[1]{#1}
+\providecommand{\url}[1]{\texttt{#1}}
+\expandafter\ifx\csname urlstyle\endcsname\relax
+  \providecommand{\doi}[1]{doi: #1}\else
+  \providecommand{\doi}{doi: \begingroup \urlstyle{rm}\Url}\fi
+
+\bibitem[Angelini et~al.(2019)Angelini, Bokan, Christoffel, Ciccarelli, and
+  Zimic]{ECBBASE2019}
+Elena Angelini, Nikola Bokan, Kai Christoffel, Matteo Ciccarelli, and
+  Sre\v{c}ko Zimic.
+\newblock Introducing {ECB-BASE}: The blueprint of the new {ECB}
+  semi-structural model for the euro area.
+\newblock Working Paper 2315, European Central Bank, 2019.
+
+\bibitem[Backus et~al.(1992)Backus, Kehoe, and Kydland]{BackusKehoeKydland1992}
+David~K. Backus, Patrick~J. Kehoe, and Finn~E. Kydland.
+\newblock International real business cycles.
+\newblock \emph{Journal of Political Economy}, 100\penalty0 (4):\penalty0
+  745--775, 1992.
+
+\bibitem[{Cepremap}(2025)]{DBnomics}
+{Cepremap}.
+\newblock {DBnomics}: {The} world's economic database.
+\newblock \url{https://db.nomics.world/}, 2025.
+
+\bibitem[Gal\'i and Monacelli(2005)]{GaliMonacelli2005}
+Jordi Gal\'i and Tommaso Monacelli.
+\newblock Monetary policy and exchange rate volatility in a small open economy.
+\newblock \emph{Review of Economic Studies}, 72\penalty0 (3):\penalty0
+  707--734, 2005.
+
+\bibitem[Herbst and Schorfheide(2015)]{HerbstSchorfheide2015}
+Edward~P. Herbst and Frank Schorfheide.
+\newblock \emph{Bayesian Estimation of {DSGE} Models}.
+\newblock Princeton University Press, 2015.
+
+\bibitem[Kollmann(2001)]{Kollmann2001}
+Robert Kollmann.
+\newblock The exchange rate in a dynamic-optimizing business cycle model with
+  nominal rigidities.
+\newblock \emph{Journal of International Economics}, 55\penalty0 (2):\penalty0
+  243--262, 2001.
+
+\bibitem[Pfeifer(2014)]{Pfeifer2014}
+Johannes Pfeifer.
+\newblock A guide to specifying observation equations for the estimation of
+  {DSGE} models.
+\newblock \emph{Working paper, University of Mannheim}, 2014.
+
+\bibitem[Rotemberg(1982)]{Rotemberg1982}
+Julio~J. Rotemberg.
+\newblock Sticky prices in the {United} {States}.
+\newblock \emph{Journal of Political Economy}, 90\penalty0 (6):\penalty0
+  1187--1211, 1982.
+
+\bibitem[Schmitt-Groh\'e and Uribe(2003)]{Schmitt-Grohe2003}
+Stephanie Schmitt-Groh\'e and Mart\'in Uribe.
+\newblock Closing small open economy models.
+\newblock \emph{Journal of International Economics}, 61\penalty0 (1):\penalty0
+  163--185, 2003.
+
+\bibitem[Smets and Wouters(2007)]{SmetsWouters2007}
+Frank Smets and Rafael Wouters.
+\newblock Shocks and frictions in {US} business cycles: {A} {B}ayesian {DSGE}
+  approach.
+\newblock \emph{American Economic Review}, 97\penalty0 (3):\penalty0 586--606,
+  2007.
+
+\bibitem[Taylor(1993)]{TaylorRule1993}
+John~B. Taylor.
+\newblock Discretion versus policy rules in practice.
+\newblock \emph{Carnegie-Rochester Conference Series on Public Policy},
+  39:\penalty0 195--214, 1993.
+
+\bibitem[Vermandel(2025)]{Vermandel2025}
+Gauthier Vermandel.
+\newblock Two-country {DSGE} with sticky prices and nominal exchange rate
+  ({SOE} standard codebook).
+\newblock 2025.
+\newblock Lecture notes, ENSAE.
+
+\end{thebibliography}
