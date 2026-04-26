@@ -22,14 +22,14 @@ assert(length(T) >= 28);
 
 T = estimation_UEM.dynamic_resid_tt(T, y, x, params, steady_state, it_);
 
-T(20) = getPowerDeriv(y(21)-params(7)*y(1),(-params(1)),1);
-T(21) = getPowerDeriv((y(63)-y(21)*params(7))/(y(21)-params(7)*y(1)),(-params(1)),1);
-T(22) = y(21)*params(19)*getPowerDeriv(y(28),(-params(16)),1);
-T(23) = getPowerDeriv(y(28)/y(44),(-params(16)),1);
-T(24) = getPowerDeriv(y(32)-params(8)*y(6),(-params(2)),1);
-T(25) = getPowerDeriv((y(68)-y(32)*params(8))/(y(32)-params(8)*y(6)),(-params(2)),1);
-T(26) = getPowerDeriv(y(44)*y(39),(-params(16)),1);
-T(27) = T(23)*(-y(28))/(y(44)*y(44));
+T(20) = getPowerDeriv(y(19)-params(7)*y(1),(-params(1)),1);
+T(21) = getPowerDeriv((y(59)-y(19)*params(7))/(y(19)-params(7)*y(1)),(-params(1)),1);
+T(22) = y(19)*params(19)*getPowerDeriv(y(26),(-params(16)),1);
+T(23) = getPowerDeriv(y(26)/y(42),(-params(16)),1);
+T(24) = getPowerDeriv(y(30)-params(8)*y(5),(-params(2)),1);
+T(25) = getPowerDeriv((y(64)-y(30)*params(8))/(y(30)-params(8)*y(5)),(-params(2)),1);
+T(26) = getPowerDeriv(y(42)*y(37),(-params(16)),1);
+T(27) = T(23)*(-y(26))/(y(42)*y(42));
 T(28) = getPowerDeriv(T(17),1-params(22),1);
 
 end

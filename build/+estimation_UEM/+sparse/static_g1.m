@@ -4,7 +4,7 @@ if nargin < 8
     T = NaN(19, 1);
 end
 [T_order, T] = estimation_UEM.sparse.static_g1_tt(y, x, params, T_order, T);
-g1_v = NaN(110, 1);
+g1_v = NaN(108, 1);
 g1_v(1)=(-((1-params(7))*getPowerDeriv(y(1)-y(1)*params(7),(-params(1)),1)));
 g1_v(2)=(-T(3));
 g1_v(3)=(-(params(21)*(1-params(19))*y(29)*T(8)/(1-params(21))));
@@ -113,11 +113,9 @@ g1_v(105)=1;
 g1_v(106)=1;
 g1_v(107)=1;
 g1_v(108)=1;
-g1_v(109)=1;
-g1_v(110)=1;
 if ~isoctave && matlab_ver_less_than('9.8')
     sparse_rowval = double(sparse_rowval);
     sparse_colval = double(sparse_colval);
 end
-g1 = sparse(sparse_rowval, sparse_colval, g1_v, 42, 42);
+g1 = sparse(sparse_rowval, sparse_colval, g1_v, 40, 40);
 end

@@ -18,6 +18,6 @@ function g2 = static_g2(T, y, x, params, T_flag)
 if T_flag
     T = estimation_UEM.static_g2_tt(T, y, x, params);
 end
-g2 = sparse([],[],[],42,1764);
+g2 = sparse([],[],[],40,1600);
 
 end

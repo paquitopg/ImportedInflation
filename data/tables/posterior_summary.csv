@@ -1,0 +1,19 @@
+parameter,prior_type,prior_mean,prior_std,post_mean,hpd_low,hpd_high,description
+xi_H,gamma,80.000,30.000,99.665,80.41,119.42,Rotemberg price adjustment cost (FR)
+xi_F,gamma,100.000,30.000,100.890,85.03,110.62,Rotemberg price adjustment cost (DE)
+hc_H,beta,0.700,0.200,0.808,0.768,0.831,Habit consumption (FR)
+hc_F,beta,0.700,0.200,0.956,0.935,0.971,Habit consumption (DE)
+rho,beta,0.850,0.100,0.753,0.687,0.837,Taylor rule smoothing (ECB)
+phi_pi,gamma,1.500,0.400,2.468,2.239,2.640,Taylor rule inflation feedback (ECB)
+rho_z_H,beta,0.850,0.100,0.719,0.590,0.827,TFP autocorrelation (FR)
+rho_z_F,beta,0.850,0.100,0.948,0.927,0.954,TFP autocorrelation (DE)
+rho_r,beta,0.500,0.200,0.760,0.657,0.816,Monetary shock autocorrelation
+SE_eta_z_H,inv_gamma,0.010,Inf,0.0049,0.0037,0.0059,Std of TFP shock (FR)
+SE_eta_z_F,inv_gamma,0.010,Inf,0.0047,0.0031,0.0059,Std of TFP shock (DE)
+SE_eta_p_H,inv_gamma,0.015,Inf,0.0095,0.0045,0.0175,Std of cost-push shock (FR)
+SE_eta_p_F,inv_gamma,0.020,Inf,0.0068,0.0041,0.0087,Std of cost-push shock (DE)
+SE_ME_pi_H,inv_gamma,0.0015,Inf,0.0030,0.0014,0.0042,Measurement error inflation (FR)
+SE_ME_pi_F,inv_gamma,0.0015,Inf,0.0024,0.0013,0.0038,Measurement error inflation (DE)
+SE_ME_gy_H,inv_gamma,0.0015,Inf,0.0208,0.0193,0.0220,Measurement error growth (FR)
+SE_ME_gy_F,inv_gamma,0.0025,Inf,0.0163,0.0151,0.0176,Measurement error growth (DE)
+SE_ME_r,inv_gamma,0.0008,Inf,0.0005,0.0002,0.0007,Measurement error policy rate

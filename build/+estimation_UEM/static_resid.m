@@ -18,7 +18,7 @@ function residual = static_resid(T, y, x, params, T_flag)
 if T_flag
     T = estimation_UEM.static_resid_tt(T, y, x, params);
 end
-residual = zeros(42, 1);
+residual = zeros(40, 1);
     residual(1) = (y(10)) - ((y(1)-y(1)*params(7))^(-params(1)));
     residual(2) = (y(21)) - ((y(12)-y(12)*params(8))^(-params(2)));
     residual(3) = (y(10)) - (y(10)*params(5)*y(23)/y(2));
@@ -50,16 +50,14 @@ residual(28) = y(37);
     residual(29) = (y(38)) - (y(2)-params(25));
     residual(30) = (y(39)) - (y(13)-params(25));
     residual(31) = (y(40)) - (y(23)-(y(23)));
-residual(32) = y(41);
-residual(33) = y(42);
-    residual(34) = (log(y(27))) - (log(y(27))*params(31)+x(1));
-    residual(35) = (log(y(28))) - (log(y(28))*params(32)+x(2));
-    residual(36) = (log(y(29))) - (log(y(29))*params(33)+x(3));
-    residual(37) = (log(y(30))) - (log(y(30))*params(34)+x(4));
-    residual(38) = (log(y(31))) - (log(y(31))*params(35)+x(5));
-    residual(39) = (log(y(32))) - (log(y(32))*params(36)+x(6));
-    residual(40) = (log(y(33))) - (log(y(33))*params(37)+x(7));
-    residual(41) = (log(y(34))) - (log(y(34))*params(38)+x(8));
-    residual(42) = (log(y(35))) - (log(y(35))*params(39)+x(9));
+    residual(32) = (log(y(27))) - (log(y(27))*params(31)+x(1));
+    residual(33) = (log(y(28))) - (log(y(28))*params(32)+x(2));
+    residual(34) = (log(y(29))) - (log(y(29))*params(33)+x(3));
+    residual(35) = (log(y(30))) - (log(y(30))*params(34)+x(4));
+    residual(36) = (log(y(31))) - (log(y(31))*params(35)+x(5));
+    residual(37) = (log(y(32))) - (log(y(32))*params(36)+x(6));
+    residual(38) = (log(y(33))) - (log(y(33))*params(37)+x(7));
+    residual(39) = (log(y(34))) - (log(y(34))*params(38)+x(8));
+    residual(40) = (log(y(35))) - (log(y(35))*params(39)+x(9));
 
 end

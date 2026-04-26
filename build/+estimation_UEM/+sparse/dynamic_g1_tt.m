@@ -7,13 +7,13 @@ T_order = 1;
 if size(T, 1) < 28
     T = [T; NaN(28 - size(T, 1), 1)];
 end
-T(20) = getPowerDeriv(y(43)-params(7)*y(1),(-params(1)),1);
-T(21) = getPowerDeriv((y(85)-y(43)*params(7))/(y(43)-params(7)*y(1)),(-params(1)),1);
-T(22) = y(43)*params(19)*getPowerDeriv(y(50),(-params(16)),1);
-T(23) = getPowerDeriv(y(50)/y(66),(-params(16)),1);
-T(24) = getPowerDeriv(y(54)-params(8)*y(12),(-params(2)),1);
-T(25) = getPowerDeriv((y(96)-y(54)*params(8))/(y(54)-params(8)*y(12)),(-params(2)),1);
-T(26) = getPowerDeriv(y(66)*y(61),(-params(16)),1);
-T(27) = T(23)*(-y(50))/(y(66)*y(66));
+T(20) = getPowerDeriv(y(41)-params(7)*y(1),(-params(1)),1);
+T(21) = getPowerDeriv((y(81)-y(41)*params(7))/(y(41)-params(7)*y(1)),(-params(1)),1);
+T(22) = y(41)*params(19)*getPowerDeriv(y(48),(-params(16)),1);
+T(23) = getPowerDeriv(y(48)/y(64),(-params(16)),1);
+T(24) = getPowerDeriv(y(52)-params(8)*y(12),(-params(2)),1);
+T(25) = getPowerDeriv((y(92)-y(52)*params(8))/(y(52)-params(8)*y(12)),(-params(2)),1);
+T(26) = getPowerDeriv(y(64)*y(59),(-params(16)),1);
+T(27) = T(23)*(-y(48))/(y(64)*y(64));
 T(28) = getPowerDeriv(T(17),1-params(22),1);
 end

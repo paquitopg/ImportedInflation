@@ -5,20 +5,31 @@
 %
 %  Projet ENSAE 2026  ImportedInflation.
 %
-%  Observables (4) :
-%     gy_H_obs, gy_F_obs, pi_H_obs, pi_F_obs
+%  Observables (5) :
+%     gy_H_obs, gy_F_obs, pi_H_obs, pi_F_obs, r_F_obs
+%  NB : gex_*_obs ecartes (variance empirique 50x trop grande pour le DSGE).
 %
-%  Parametres estimes :
-%     - rigidites nominales (xi_H, xi_F) : priors gamma centres sur 80, 100
-%     - preferences (hc, sigmaC, sigmaH, rho) : priors standards
-%     - regle BCE (phi_pi, phi_y) : priors centres sur Taylor 1993
-%     - chocs non-energie (persistance + ecart-type) : priors beta / inv-gamma
+%  Parametres estimes (16 - ITER 8) :
+%     - rigidites nominales : xi_H, xi_F
+%     - habits : hc_H, hc_F
+%     - regle BCE : rho, phi_pi
+%     - persistance : rho_z_H, rho_z_F, rho_r
+%     - ecarts-type chocs structurels : eta_z_*, eta_p_*
+%     - ecarts-type erreurs de mesure : ME_pi_*, ME_gy_*, ME_r
+%       (5 ME estimees pour eviter le catch-all sur chocs structurels)
 %
-%  Parametres CALIBRES (non estimes, pivot du rapport) :
-%     - beta, alpha, epsilon, mu, n, piss
+%  Parametres CALIBRES (cf. iter 1-6, sans observable de contrepartie) :
+%     - beta, alpha, epsilon, mu, n, piss, phi_y, sigmaC_*, sigmaH_*
 %     - commerce bilateral (alphaC_H, alphaC_F)
-%     - chocs energie rho_p_H, rho_p_F, sigma(eta_p_H), sigma(eta_p_F)
-%     - correlation energie entre pays
+%     - persistance chocs energie (rho_p_H=0.90, rho_p_F=0.95)
+%     - chocs sans observable : eta_x_*, eta_g_*, eta_r calibres tight
+%       dans le bloc shocks ; rho_x_*, rho_g_* fixes a 0.85
+%     - correlation eta_p_H/eta_p_F = 0.7 (choc energie commun)
+%
+%  Erreur de mesure (10% std empirique) sur les 5 observables :
+%     necessaire car le modele ne peut pas matcher la variance d'inflation
+%     observee (cf. iter 6 : sans erreur de mesure, eta_z_* explose en
+%     catch-all). Permet une estimation propre et bornee.
 % ============================================================
 
 close all;
@@ -33,8 +44,10 @@ var
     e_z_H e_p_H e_x_H e_g_H
     e_z_F e_p_F e_x_F e_g_F
     e_r
-    gy_H_obs gy_F_obs pi_H_obs pi_F_obs
-    r_F_obs gex_H_obs gex_F_obs ;
+    gy_H_obs gy_F_obs pi_H_obs pi_F_obs r_F_obs ;
+    % NB : gex_*_obs retires comme observables (volatilite empirique 3.8%/Q
+    % vs modele ~0.07%/Q : DSGE sans inventaires/extensive margin ne peut
+    % pas matcher cette variance ; provoque non-identification.)
 
 varexo
     eta_z_H eta_p_H eta_x_H eta_g_H
@@ -120,7 +133,7 @@ steady_state_model;
     e_z_F=1; e_p_F=1; e_x_F=1; e_g_F=1;
     e_r  =1;
     gy_H_obs=0; gy_F_obs=0; pi_H_obs=0; pi_F_obs=0;
-    r_F_obs=0; gex_H_obs=0; gex_F_obs=0;
+    r_F_obs=0;
 end;
 
 %----------------------------------------------------------------
@@ -193,9 +206,6 @@ model;
     pi_F_obs = pic_F - piss;
     % Taux UEM : un seul r ; on observe r_F_obs (identique a r_H_obs en data)
     r_F_obs  = r - STEADY_STATE(r);
-    % Croissance exports bilateraux (anti-catch-all sur eta_x_*)
-    gex_H_obs = log(ex_H/ex_H(-1));
-    gex_F_obs = log(ex_F/ex_F(-1));
 
     % === Processus AR(1) ===
     log(e_z_H) = rho_z_H*log(e_z_H(-1)) + eta_z_H;
@@ -217,53 +227,68 @@ check;
 % 5. Chocs : les 2 chocs energie sont CALIBRES (hors estim)
 %----------------------------------------------------------------
 shocks;
-    % Chocs energie : ecarts-types fixes, correlation fixee
-    var eta_p_H;  stderr 0.005;
-    var eta_p_F;  stderr 0.015;
+    % Correlation energie fixee (le coeur de l'asymetrie cost-push).
+    % Les stderr eta_p_* sont ESTIMES (cf. estimated_params).
     corr eta_p_H, eta_p_F = 0.7;
-    % Chocs gouvernementaux calibres (pas d'observable de contrepartie).
+    % Chocs sans observable de contrepartie : CALIBRES tight.
     var eta_g_H;  stderr 0.005;
     var eta_g_F;  stderr 0.005;
+    var eta_x_H;  stderr 0.005;
+    var eta_x_F;  stderr 0.005;
+    var eta_r;    stderr 0.003;
+    % NB iter 8 : les erreurs de mesure sont desormais ESTIMEES (cf.
+    % estimated_params). Initial values donnees ici.
+    var pi_H_obs; stderr 0.0015;
+    var pi_F_obs; stderr 0.0020;
+    var gy_H_obs; stderr 0.0015;
+    var gy_F_obs; stderr 0.0025;
+    var r_F_obs;  stderr 0.0008;
 end;
 
 %----------------------------------------------------------------
 % 6. Observables et bloc d'estimation
 %----------------------------------------------------------------
-varobs gy_H_obs gy_F_obs pi_H_obs pi_F_obs r_F_obs gex_H_obs gex_F_obs;
+varobs gy_H_obs gy_F_obs pi_H_obs pi_F_obs r_F_obs;
 
 estimated_params;
-%   PARAM,                INITVAL,  LB, UB,   PRIOR,           P1,     P2
-    % --- Rigidites nominales (cur du rapport) ---
-    xi_H,                 80,       10, 500,  gamma_pdf,       80,     20;
-    xi_F,                 100,      10, 500,  gamma_pdf,       100,    20;
+%   PARAM,                INITVAL,  LB,  UB,    PRIOR,           P1,    P2
+    % --- Rigidites nominales (CUR du rapport) ---
+    %     ITER 9 : INITVAL = mode iter 8 pour aider CMA-ES.
+    xi_H,                 216,      10,  500,   gamma_pdf,       80,    30;
+    xi_F,                 230,      10,  500,   gamma_pdf,       100,   30;
 
-    % --- Preferences (symetriques, priors larges) ---
-    hc_H,                 0.7,      0,  0.99, beta_pdf,        0.7,    0.1;
-    hc_F,                 0.7,      0,  0.99, beta_pdf,        0.7,    0.1;
-    sigmaC_H,             1.5,      0.5,5,    normal_pdf,      1.5,    0.35;
-    sigmaC_F,             1.5,      0.5,5,    normal_pdf,      1.5,    0.35;
+    % --- Habits ---
+    %     ITER 9 : LB hc_H elargi 0.05 (iter 8 collait hc_H=0.10=LB).
+    hc_H,                 0.30,     0.05, 0.97, beta_pdf,        0.7,   0.20;
+    hc_F,                 0.50,     0.05, 0.97, beta_pdf,        0.7,   0.20;
+    % sigmaC_H, sigmaC_F : CALIBRES a 1.5 (n'ont jamais bouge des priors).
 
     % --- Regle BCE ---
-    rho,                  0.85,     0,  0.99, beta_pdf,        0.8,    0.1;
-    phi_pi,               1.5,      1,  3,    gamma_pdf,       1.5,    0.25;
-    phi_y,                0.125,    0,  1,    gamma_pdf,       0.125,  0.05;
+    %     ITER 9 : phi_pi UB elargi 5.0 (iter 8 collait phi_pi=3.0=UB).
+    rho,                  0.85,     0.3, 0.99,  beta_pdf,        0.85,  0.10;
+    phi_pi,               2.5,      1.0, 5.0,   gamma_pdf,       1.5,   0.40;
+    % phi_y : CALIBRE a 0.125.
 
-    % --- Persistance chocs non-energie ---
-    rho_z_H,              0.95,     0,  0.99, beta_pdf,        0.7,    0.15;
-    rho_z_F,              0.95,     0,  0.99, beta_pdf,        0.7,    0.15;
-    rho_x_H,              0.85,     0,  0.99, beta_pdf,        0.6,    0.2;
-    rho_x_F,              0.85,     0,  0.99, beta_pdf,        0.6,    0.2;
-    % rho_g_H, rho_g_F : CALIBRES (pas d'observable gouvernemental,
-    % identification sous-determinee, mode collait a 0.99).
-    rho_r,                0.50,     0,  0.99, beta_pdf,        0.5,    0.2;
+    % --- Persistance chocs de productivite (TFP : observable = gy_*_obs) ---
+    rho_z_H,              0.90,     0.3, 0.99,  beta_pdf,        0.85,  0.10;
+    rho_z_F,              0.75,     0.3, 0.99,  beta_pdf,        0.85,  0.10;
+    % rho_x_*, rho_g_*, rho_p_* : CALIBRES.
+    rho_r,                0.85,     0,   0.99,  beta_pdf,        0.5,   0.20;
 
-    % --- Ecarts-types des chocs non-energie ---
-    stderr eta_z_H,       0.007,    ,   ,     inv_gamma_pdf,   0.01,   2;
-    stderr eta_z_F,       0.007,    ,   ,     inv_gamma_pdf,   0.01,   2;
-    stderr eta_x_H,       0.01,     ,   ,     inv_gamma_pdf,   0.01,   2;
-    stderr eta_x_F,       0.01,     ,   ,     inv_gamma_pdf,   0.01,   2;
-    % stderr eta_g_H, eta_g_F : CALIBRES dans shocks; (cf. note ci-dessus).
-    stderr eta_r,         0.002,    ,   ,     inv_gamma_pdf,   0.005,  2;
+    % --- Ecarts-types des chocs structurels ESTIMES ---
+    %     ITER 9 : UB elargi 0.30 (iter 8 collait eta_p_*=0.10=UB sur les 2).
+    stderr eta_z_H,       0.005,    1e-4, 0.30,  inv_gamma_pdf,   0.01,  0.01;
+    stderr eta_z_F,       0.020,    1e-4, 0.30,  inv_gamma_pdf,   0.01,  0.01;
+    stderr eta_p_H,       0.10,     1e-4, 0.30,  inv_gamma_pdf,   0.015, 0.015;
+    stderr eta_p_F,       0.10,     1e-4, 0.30,  inv_gamma_pdf,   0.020, 0.020;
+
+    % --- ERREURS DE MESURE ESTIMEES ---
+    %     ITER 9 : UB elargi 0.02 (iter 8 collait 3 ME a UB=0.005).
+    stderr pi_H_obs,      0.0009,   1e-5, 0.020, inv_gamma_pdf,   0.0015, 0.0015;
+    stderr pi_F_obs,      0.005,    1e-5, 0.020, inv_gamma_pdf,   0.0015, 0.0015;
+    stderr gy_H_obs,      0.005,    1e-5, 0.020, inv_gamma_pdf,   0.0015, 0.0015;
+    stderr gy_F_obs,      0.005,    1e-5, 0.020, inv_gamma_pdf,   0.0025, 0.0025;
+    stderr r_F_obs,       0.0016,   1e-5, 0.020, inv_gamma_pdf,   0.0008, 0.0008;
 end;
 
 %----------------------------------------------------------------
@@ -272,14 +297,32 @@ end;
 estimation(
     datafile        = '../data/myobs_FR_DE.mat',
     first_obs       = 1,
-    mode_compute    = 4,
+    % mode_compute=9 (CMA-ES) : derivative-free, robuste aux regions plates.
+    mode_compute    = 9,
+    optim           = ('MaxIter', 3000, 'TolFun', 1e-7, 'TolX', 1e-7),
+    mode_check,
+    % ============================================================
+    % ITER 9 : SOLUTION AU PROBLEME HESSIENNE NON-DP
+    % ------------------------------------------------------------
+    % Quand le mode est sur une paroi (UB/LB), la Hessienne calculee
+    % par differences finies n'est pas Definie-Positive ; or MH-RWM
+    % a besoin d'une matrice de covariance de proposition PD.
+    %
+    % MCMC_jumping_covariance = prior_variance utilise la MATRICE DE
+    % VARIANCE DES PRIORS comme proposal covariance, ce qui garantit
+    % la positive-definitude par construction. C'est l'option officielle
+    % Dynare pour contourner ce probleme.
+    %
+    % Documentee dans le manuel Dynare 6, section 4.20.
+    % ============================================================
+    MCMC_jumping_covariance = 'prior_variance',
     mh_replic       = 5000,
     mh_nblocks      = 2,
-    mh_jscale       = 0.45,
+    mh_jscale       = 0.30,
     prefilter       = 1,
     lik_init        = 2,
     forecast        = 8
-) gy_H_obs gy_F_obs pi_H_obs pi_F_obs r_F_obs gex_H_obs gex_F_obs;
+) gy_H_obs gy_F_obs pi_H_obs pi_F_obs r_F_obs;
 
 %----------------------------------------------------------------
 % 8. Re-injection des posteriors pour scenarios post-estim

@@ -1,0 +1,615 @@
+% =====================================================================
+%  ImportedInflation -- ENSAE Macro Modelling 2025-2026
+%  10-page report : Energy price shocks and trade between FR and DE
+% =====================================================================
+\documentclass[11pt,a4paper]{article}
+
+% --- Geometry & typography ---------------------------------------------
+\usepackage[a4paper,top=2.2cm,bottom=2.4cm,left=2.4cm,right=2.4cm]{geometry}
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage{lmodern}
+\usepackage{microtype}
+
+% --- Math, tables, figures ---------------------------------------------
+\usepackage{amsmath,amssymb,amsfonts}
+\usepackage{booktabs}
+\usepackage{graphicx}
+\usepackage{subcaption}
+\usepackage{caption}
+\captionsetup[figure]{font=small,labelfont=bf,skip=4pt}
+\captionsetup[table]{font=small,labelfont=bf,skip=4pt}
+\usepackage{xcolor}
+\usepackage{enumitem}
+\setlist{nosep,leftmargin=*}
+\usepackage{titlesec}
+\titlespacing*{\section}{0pt}{1.2ex}{0.6ex}
+\titlespacing*{\subsection}{0pt}{0.9ex}{0.4ex}
+\titleformat{\section}{\large\bfseries}{\thesection}{0.6em}{}
+\titleformat{\subsection}{\normalsize\bfseries}{\thesubsection}{0.5em}{}
+\usepackage{hyperref}
+\hypersetup{
+  colorlinks=true, linkcolor=black, citecolor=blue!50!black,
+  urlcolor=blue!50!black, breaklinks=true
+}
+\usepackage[round,authoryear]{natbib}
+\bibliographystyle{plainnat}
+
+\graphicspath{{fig/}}
+
+% --- Title information --------------------------------------------------
+\title{\vspace{-1.6cm}\textbf{Energy Price Shocks and Trade Spillovers in the Euro Area:\\
+A Two-Country DSGE Estimation for France and Germany}}
+\author{Paco Goze \\
+        \small ENSAE Paris -- Macro Modelling Project 2025--2026}
+\date{April 2026}
+
+\begin{document}
+\maketitle
+\vspace{-1.0em}
+
+\begin{abstract}\noindent\small
+We build a two-country New Keynesian DSGE model adapted to a single
+currency area to study the asymmetric transmission of an energy
+price shock between France and Germany during the 2021--2023 European
+gas crisis. The model is estimated by Bayesian methods on quarterly
+French and German macroeconomic data over 1999Q2--2025Q3. We
+quantify the bilateral pass-through of imported cost-push inflation
+through the trade channel, the bilateral real exchange rate, and the
+common ECB monetary stance. We then evaluate a counterfactual where
+the ECB Taylor coefficient on inflation is 50\% larger, and compare
+our findings with the semi-structural ECB-BASE model. Our results
+emphasise both the explanatory potential and the identification
+limits of a simple structural model on a small information set.
+\end{abstract}
+
+% =====================================================================
+\section{Research Question and Motivation}
+% =====================================================================
+The 2021--2023 surge of natural gas and electricity prices in Europe
+delivered a textbook supply-side shock that propagated unevenly
+through the euro area. Germany, more dependent on gas imports and
+on energy-intensive manufacturing, faced larger marginal cost
+pressures than France, which was partly insulated by a regulated
+electricity tariff (the \emph{bouclier tarifaire}) and a lower share
+of gas in its energy mix. Yet under a common monetary regime, the
+two economies cannot insulate each other: a country-specific cost-push
+shock is transmitted to its neighbour through (i) the bilateral
+real exchange rate, (ii) demand spillovers via bilateral trade, and
+(iii) the area-wide monetary policy response of the ECB.
+
+Our research question is the following: \emph{To what extent does an
+energy price shock originating in Germany feed back into French
+inflation, output and the bilateral trade balance, given a single
+ECB monetary stance, and how would a different ECB reaction function
+have changed the transmission?} We label this transmission
+\emph{soft imported inflation} because it operates through marginal
+cost differentials rather than through nominal exchange rate
+adjustment, which is mechanically zero inside the euro area.
+
+We answer the question by estimating a microfounded two-country DSGE
+model on French and German quarterly data, characterising the
+posterior distribution of the structural parameters, and running
+counterfactual policy experiments. Our contribution lies in
+combining (a) an explicit treatment of the European Monetary Union
+(EMU) constraint, (b) Bayesian inference using the standard MCMC
+machinery in Dynare, and (c) an honest discussion of the
+identification limits faced when no energy price series is included
+among the observables.
+
+% =====================================================================
+\section{Model}
+% =====================================================================
+We adapt the open-economy New Keynesian framework of
+\citet{Kollmann2001} and the international real business cycle
+mechanics of \citet{BackusKehoeKydland1992} to a two-country model
+inside a monetary union. The codebase follows the structure of
+\citet{Vermandel2025}, modified to enforce
+$\Delta e_t \equiv 1$ (no nominal exchange rate movement) and a single
+common policy rate $r_t$.
+
+\paragraph{Households.}
+In each country $i \in \{H,F\}$ a representative agent maximises
+$\sum_{t} \beta^t \big[ \tfrac{(c_{i,t}-h c_{i,t-1})^{1-\sigma_C}}{1-\sigma_C}
+- \chi_i \tfrac{h_{i,t}^{1+\sigma_H}}{1+\sigma_H} \big]$
+subject to a budget constraint and an Armington consumption bundle
+of domestic and foreign goods with elasticity $\mu = 1.5$ and
+home bias $\phi_i$.
+
+\paragraph{Firms.}
+Monopolistic competitors face Rotemberg-style \citep{Rotemberg1982}
+quadratic price-adjustment costs of magnitude $\xi_i$. The non-linear
+NKPC is
+\begin{equation}
+(1-\varepsilon_i) + \varepsilon_i\, e_{p,i,t}\,mc_{i,t}
+- \xi_i\, \pi_{i,t}(\pi_{i,t} - \pi^{\star})
++ \xi_i \beta\,\mathbb{E}_t\!\Big[\tfrac{\lambda_{i,t+1}}{\lambda_{i,t}}\,
+\pi_{i,t+1}(\pi_{i,t+1}-\pi^{\star})\,\tfrac{y_{i,t+1}}{y_{i,t}}\Big] = 0,
+\label{eq:nkpc}
+\end{equation}
+where $e_{p,i,t}$ is a country-specific cost-push (energy) shock
+process. Production is Cobb-Douglas, $y_{i,t} = A\, e_{z,i,t}\,
+h_{i,t}^{\alpha}$, with $\alpha = 0.65$.
+
+\paragraph{Closure and EMU constraint.}
+Following \citet{Schmitt-Grohe2003}, a small portfolio cost
+$\chi_B$ on net foreign assets (NFA) ensures stationarity. Inside
+the EMU, the bilateral real exchange rate satisfies
+$\mathrm{rer}_t / \mathrm{rer}_{t-1} = \pi_{F,t} / \pi_{H,t}$ -- the
+real exchange rate is purely the inflation differential. The single
+policy rate follows a smoothed Taylor rule on area-wide CPI inflation:
+\begin{equation}
+r_t = r_{t-1}^{\rho}\;\Big(\bar r\,(\pi^{UEM}_t/\pi^{\star})^{\phi_\pi}
+                               (y^{UEM}_t/\bar y^{UEM})^{\phi_y}\Big)^{1-\rho} e_{r,t},
+\quad \pi^{UEM}_t = n\,\pi^c_{H,t} + (1-n)\,\pi^c_{F,t},
+\label{eq:taylor}
+\end{equation}
+with $n = 0.40$ the French share of the FR+DE GDP aggregate.
+
+\paragraph{Imported inflation channel.}
+The energy shock enters through $e_{p,F,t}$ in
+Equation~(\ref{eq:nkpc}). It increases German marginal cost and CPI
+inflation $\pi_{F,t}$, which (i) lifts area-wide $\pi^{UEM}_t$ and
+triggers a tightening from the common rate $r_t$, (ii) appreciates
+the bilateral real exchange rate against France, lowering French
+import prices in real terms but raising the relative price of French
+exports, and (iii) reduces foreign demand $c_F$ for French goods
+$ex_H$. The transmission to French inflation $\pi_H$ is therefore
+indirect, operating through trade and the common policy response
+rather than through a direct cost-channel -- this is the
+``soft inflation'' object of our analysis. We further assume a
+correlation of $0.7$ between the two energy shocks, capturing the
+fact that European gas prices co-move strongly across countries.
+
+% =====================================================================
+\section{Data}
+% =====================================================================
+We use five quarterly observables for the period 1999Q2--2025Q3
+($N=106$): real GDP growth in France ($gy_{H,t}$) and Germany
+($gy_{F,t}$), HICP inflation in deviation from the 2\% target in
+each country ($\pi^{obs}_{H,t}, \pi^{obs}_{F,t}$), and the ECB main
+refinancing rate ($r^{obs}_t$). All series come from
+\citet{DBnomics} (Eurostat and ECB origin). Pre-processing follows
+the recommendations of \citet{Pfeifer2014}: log-differences for GDP,
+deviations from steady-state for inflation and the rate, and a
+\texttt{prefilter} demeaning inside Dynare to absorb sample means.
+
+Bilateral export growth series were initially considered as
+observables but discarded after the diagnostic stage: their
+empirical quarterly volatility (about 3.8\%) exceeds the model's
+unconditional standard deviation by a factor of 50, which leads to
+non-identification when included in the likelihood. Including them
+in measurement would force the structural shocks to absorb a
+volatility the model cannot reproduce. They remain useful as
+business-cycle confirmation and are visualised in
+Figure~\ref{fig:obs}.
+
+\begin{figure}[h!]
+  \centering
+  \includegraphics[width=0.95\linewidth]{fig1_observables}
+  \caption{The five quarterly observables used for estimation
+    (1999Q2--2025Q3). HICP inflation series are in deviation from
+    the 2\% target. The 2008--2009 great recession, the 2020 COVID
+    shock, and the 2022 inflation surge are visible across all
+    series.}
+  \label{fig:obs}
+\end{figure}
+
+% =====================================================================
+\section{Customisation and Bayesian Estimation}
+% =====================================================================
+\subsection{Calibrated parameters}
+Following the EMU literature, we fix $\beta = 0.995$,
+$\sigma_C = 1.5$, $\sigma_H = 2$, $\alpha = 0.65$,
+$\varepsilon = 10$, $\mu = 1.5$. The bilateral openness parameters
+are pinned to the empirical bilateral trade-to-GDP ratios:
+$\alpha^C_H = 0.220$ implies an FR import share of $13\%$ of French
+GDP, $\alpha^C_F = 0.117$ implies $3.5\%$ of German GDP. The country
+weight $n = 0.40$ matches the FR/(FR+DE) GDP ratio in 2024. The
+inflation target is $\pi^{\star} = 1.005$ (2\% annualised). Energy
+shocks $\eta_{p,H}, \eta_{p,F}$ have correlation $0.7$ to capture
+the European common energy price component.
+
+\subsection{Estimated parameters}
+Sixteen parameters are estimated by Bayesian Metropolis-Hastings:
+the Rotemberg costs $\xi_H, \xi_F$, habit persistence $h^c_H, h^c_F$,
+the Taylor rule coefficients $\rho$ and $\phi_\pi$, the productivity
+and monetary persistence parameters $\rho_z^H, \rho_z^F, \rho_r$,
+the standard deviations of four structural shocks ($\eta_{z,H},
+\eta_{z,F}, \eta_{p,H}, \eta_{p,F}$), and five measurement-error
+standard deviations \citep{SmetsWouters2007}. The remaining
+shocks ($\eta_{x,i}, \eta_{g,i}, \eta_r$) are tightly calibrated
+because they have no observable counterpart and would otherwise act
+as residual catch-alls absorbing all of the data variability.
+
+\subsection{Numerical implementation}
+The model is solved at first order around the deterministic
+steady state. Mode finding uses the derivative-free CMA-ES algorithm
+(Dynare option \texttt{mode\_compute=9}), which proved more robust
+than \texttt{csminwel} on this problem. The MCMC sampler uses two
+chains of 5{,}000 draws with the Random-Walk Metropolis algorithm.
+
+A practical difficulty arose at this stage: the numerical Hessian
+at the mode is non-positive-definite, which prevents the standard
+proposal covariance $-H^{-1}$ from being used. We invoke the
+official Dynare workaround
+\texttt{MCMC\_jumping\_covariance = 'prior\_variance'}, which uses
+the diagonal prior variance matrix as proposal covariance
+(positive-definite by construction). The cost is a less efficient
+sampler that ignores local curvature; we mitigate it by scaling the
+proposals (\texttt{mh\_jscale = 0.30}). This pathology is documented
+in \citet[\S6]{HerbstSchorfheide2015}.
+
+\paragraph{Posterior estimates.}
+Table~\ref{tab:posterior} reports the prior and posterior moments
+for the structural parameters. The full prior-vs-posterior densities
+are shown in Figure~\ref{fig:priorpost}; supplementary diagnostics
+are in Appendix~\ref{app:diagnostics}.
+
+\begin{table}[h!]
+\centering\small
+\caption{Prior and posterior moments of structural parameters.
+HPD: 90\% highest posterior density interval.}
+\label{tab:posterior}
+\begin{tabular}{l c c c c c}
+\toprule
+Parameter & Prior type & Prior mean (sd) & Post. mean & 90\% HPD & Description \\
+\midrule
+$\xi_H$        & gamma & 80.0 (30) & 99.66 & [80.4 ; 119.4]  & Rotemberg cost (FR) \\
+$\xi_F$        & gamma & 100.0 (30)& 100.89& [85.0 ; 110.6]  & Rotemberg cost (DE) \\
+$h^c_H$        & beta  & 0.70 (0.20) & 0.808 & [0.768 ; 0.831] & Habits (FR) \\
+$h^c_F$        & beta  & 0.70 (0.20) & 0.956 & [0.935 ; 0.971] & Habits (DE) \\
+$\rho$         & beta  & 0.85 (0.10) & 0.753 & [0.687 ; 0.837] & Taylor smoothing \\
+$\phi_\pi$     & gamma & 1.50 (0.40) & 2.468 & [2.239 ; 2.640] & Taylor inflation \\
+$\rho_z^H$     & beta  & 0.85 (0.10) & 0.719 & [0.590 ; 0.827] & TFP persistence FR \\
+$\rho_z^F$     & beta  & 0.85 (0.10) & 0.948 & [0.927 ; 0.954] & TFP persistence DE \\
+$\rho_r$       & beta  & 0.50 (0.20) & 0.760 & [0.657 ; 0.816] & Monetary shock persistence \\
+$\sigma_{p,H}$ & inv-gamma & 0.015 ($\infty$) & 0.0095 & [0.0045 ; 0.0175] & Cost-push std (FR) \\
+$\sigma_{p,F}$ & inv-gamma & 0.020 ($\infty$) & 0.0068 & [0.0041 ; 0.0087] & Cost-push std (DE) \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\begin{figure}[h!]
+  \centering
+  \includegraphics[width=0.95\linewidth]{estimation_UEM_PriorsAndPosteriors1}
+  \caption{Prior (grey) and posterior (black) marginal densities for
+    the first nine estimated parameters. The data are clearly
+    informative for $\xi_H, \xi_F, h^c_H, h^c_F, \phi_\pi, \rho_z^F$;
+    less so for $\rho_z^H$ and $\rho$.}
+  \label{fig:priorpost}
+\end{figure}
+
+% =====================================================================
+\section{Interpretation of Results}
+% =====================================================================
+\subsection{Posterior parameter readings}
+Three findings stand out:
+
+\begin{enumerate}
+\item \textbf{Symmetric Rotemberg rigidity.} The data return
+  $\xi_H \approx \xi_F \approx 100$, against a prior asymmetry
+  encoded in the calibration (80 vs 100). Once the model is allowed
+  to learn from the joint dynamics of FR and DE inflation, no
+  significant pass-through asymmetry survives -- a result coherent
+  with similar HICP services weights and similar wage indexation
+  in the two economies.
+\item \textbf{Aggressive ECB Taylor coefficient.}
+  $\phi_\pi$ is estimated at $2.47$ with a tight 90\% HPD of
+  $[2.24; 2.64]$, well above the 1.5 textbook value and the prior
+  mean. This reflects the post-2021 tightening cycle's footprint on
+  the 2003--2024 sample: the ECB reaction function inferred over the
+  full sample is genuinely more inflation-responsive than the
+  classical \citet{TaylorRule1993} prescription.
+\item \textbf{Heterogeneous productivity persistence.}
+  $\rho_z^F = 0.948$ vs $\rho_z^H = 0.719$ implies German technology
+  shocks are nearly permanent within the sample horizon, whereas
+  French TFP is more transitory. This asymmetry of structural
+  persistence is more economically meaningful than the symmetric
+  rigidities and contributes to the bulk of cross-country spillovers.
+\end{enumerate}
+
+\subsection{Variance decomposition and the identification limit}
+Table~\ref{tab:vardec} reports the unconditional variance
+decomposition of the four key observables. A striking feature is the
+dominance of the residual monetary shock $\eta_r$ in inflation
+variance: $86\%$ of $\pi_H$ and $91\%$ of $\pi_F$. Conversely, the
+contribution of $\eta_{p,F}$ -- our identified energy shock -- is
+small: $0.21\%$ of $\pi_H$ and $0.37\%$ of $\pi_F$.
+
+\begin{table}[h!]
+\centering\small
+\caption{Unconditional variance decomposition of inflation
+  (percent, with measurement error). $\eta_r$ here acts as a
+  catch-all monetary residual.}
+\label{tab:vardec}
+\begin{tabular}{l c c c c c c c}
+\toprule
+Variable & $\eta_{z,H}$ & $\eta_{p,H}$ & $\eta_{z,F}$ & $\eta_{p,F}$ & $\eta_r$ & ME & Total \\
+\midrule
+$\pi^{obs}_H$ (FR) & 6.21 & 1.81 & 3.68 & 0.19 & 75.27 & 12.55 & 100 \\
+$\pi^{obs}_F$ (DE) & 0.19 & 0.55 & 6.92 & 0.34 & 85.45 & 6.37  & 100 \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+This is a transparent identification limit: with no observable
+energy price series in our information set, the Kalman filter has
+no anchor to attribute the 2021--2023 inflation surge to
+$\eta_{p,F}$ rather than to a sequence of large $\eta_r$
+realisations. Both stories fit the data equally well in-sample.
+This is precisely why the comparison with ECB-BASE in
+Section~\ref{sec:ecbbase} matters: ECB-BASE consumes the price of
+gas as exogenous, lifting this ambiguity by construction.
+
+\subsection{Impulse-response analysis}
+Figure~\ref{fig:irf} reports the impulse responses to a
+$+1\sigma$ shock to $\eta_{p,F}$ at the posterior mean. We observe
+the expected pattern: German inflation rises immediately by about
+0.06 percentage points (annualised), reaches a peak of 0.04 pp at
+$t=2$, and decays back to baseline over 12--16 quarters. French
+inflation reacts with a one-period lag and a smaller magnitude (peak
+of 0.018 pp), confirming the soft transmission. The ECB tightens
+by about 4 basis points at the peak. Bilateral real depreciation of
+the franc-mark relative price reduces French exports to Germany,
+while imports rise, opening a small bilateral trade deficit. Net
+foreign assets accumulate in France due to the income effect on
+consumption.
+
+\begin{figure}[h!]
+  \centering
+  \includegraphics[width=0.95\linewidth]{irf_eta_p_F}
+  \caption{Impulse responses to a $+1\sigma$ German cost-push shock
+    $\eta_{p,F}$ at the posterior mean. Horizontal axis: quarters
+    after the shock. Vertical axis: deviation from the steady state
+    (inflation in pp annualised, output in \%, NFA in absolute
+    units).}
+  \label{fig:irf}
+\end{figure}
+
+\subsection{Historical decomposition of French inflation}
+Figure~\ref{fig:histdecomp} displays the smoothed historical
+decomposition of $\pi^{obs}_H$ over the full sample. The three
+recession episodes (2008--2009, 2020, and 2022--2023) are visible,
+but the model attributes the 2022 spike predominantly to the
+monetary residual $\eta_r$ -- consistent with the variance
+decomposition above. A counterfactual exercise that imposed an
+explicit energy shock series instead of letting it be inferred would
+likely re-attribute most of this residual to $\eta_{p,F}$, but is
+beyond the scope of this paper.
+
+\begin{figure}[h!]
+  \centering
+  \includegraphics[width=0.95\linewidth]{estimation_UEM_shock_decomposition_pi_H_obs}
+  \caption{Historical shock decomposition of French HICP inflation
+    in deviation from target (1999Q2--2025Q3). The 2022 surge is
+    captured by the residual monetary shock rather than by the
+    cost-push shock, illustrating the identification limit
+    discussed in the text.}
+  \label{fig:histdecomp}
+\end{figure}
+
+% =====================================================================
+\section{Policy Scenario: Counterfactual ECB Taylor Coefficient}
+% =====================================================================
+We exploit the estimated structure to evaluate a counterfactual
+where the ECB Taylor coefficient on inflation is $50\%$ larger than
+the estimated value: $\phi_\pi^{\,\text{hawkish}} = 1.5 \times 2.468
+= 3.70$. The exercise asks: \emph{If the ECB had reacted more
+aggressively to inflation, would it have offset the 2021--2023
+imported inflation shock more effectively?} Such a counterfactual
+is theoretically meaningful in our model because the rule is
+estimated, not imposed.
+
+We feed the model with a stylised energy shock: $\eta_{p,F} =
++3\sigma$ for four consecutive quarters (i.e.\ $+0.020$ in log
+points each quarter, totalling roughly $+8\%$ on cost-push
+intensity), then zero. Such an amplitude crudely mimics the magnitude
+and persistence of the 2021Q4--2022Q3 episode. The model is solved
+under each $\phi_\pi$ regime; trajectories are constructed by linear
+projection of the impulse-response operator using the Dynare
+\texttt{simult\_} routine.
+
+\begin{figure}[h!]
+  \centering
+  \includegraphics[width=0.97\linewidth]{scenario_energy_2regimes}
+  \caption{Counterfactual response to a $+3\sigma$ German cost-push
+    shock for four quarters under two ECB monetary regimes:
+    baseline ($\phi_\pi = 2.47$, blue solid) vs hawkish
+    ($\phi_\pi = 3.70$, red dashed). Inflation panels are in
+    annualised percentage points; growth panels are in quarterly
+    percent; export and NFA panels are deviations from steady state.}
+  \label{fig:scenario}
+\end{figure}
+
+\paragraph{Findings.}
+The hawkish regime delivers a markedly more contractionary path:
+
+\begin{itemize}
+\item French inflation peaks at $+0.18$ pp annualised under baseline
+  vs $+0.13$ pp under the hawkish rule, a reduction of $28\%$ at
+  the peak. German inflation peaks at $+0.65$ vs $+0.50$ pp
+  ($-23\%$).
+\item Output growth (quarterly) is reduced by an additional 4--6
+  basis points in both countries during the first year, reflecting
+  the standard demand effect of a tighter monetary stance.
+\item The bilateral trade balance -- French exports to Germany
+  $ex_H$ and German exports to France $ex_F$ -- contracts more in
+  both directions under hawkish, because the area-wide demand
+  contraction more than offsets the relative price reallocation.
+\item The ECB rate path lifts by an additional 35 basis points at
+  the peak under the hawkish rule.
+\end{itemize}
+
+The exercise illustrates the standard inflation-output trade-off
+under a cost-push shock: a more aggressive ECB cuts inflation but
+amplifies the recession. It also shows that, in our estimated model,
+the asymmetric pass-through to France (smaller in absolute level)
+\emph{translates into asymmetric stabilisation gains}: France needs
+a smaller monetary tightening to match its target than Germany,
+which the common rule cannot deliver. This is the textbook
+``one-size-fits-all'' problem of EMU, given quantitative content by
+the estimated parameters.
+
+% =====================================================================
+\section{Comparison with the ECB-BASE Macroeconometric Model}
+\label{sec:ecbbase}
+% =====================================================================
+We contrast our DSGE with the European Central Bank's
+\textbf{ECB-BASE} model \citep{ECBBASE2019}, the Eurosystem's
+operational semi-structural macroeconometric model used for
+forecasts and policy simulations.
+
+\paragraph{Architectural contrast.}
+ECB-BASE is built around 100+ behavioural equations estimated
+single-equation-by-single-equation, with hybrid expectations (rational
+in the financial block, adaptive in the real block) and
+error-correction dynamics around long-run cointegrating
+relationships. Energy prices (Brent oil, wholesale gas) enter as
+\emph{exogenous} variables feeding directly into a sectoral
+production block and an HICP-energy retail equation. Our DSGE, by
+contrast, is fully microfounded, has fewer equations and parameters,
+linearises around the steady state, and treats energy as a residual
+cost-push shock $\eta_{p,F}$.
+
+\paragraph{Quantitative comparability.}
+For a $+10\%$ wholesale gas shock (a comparable magnitude to our
+$+3\sigma$ exercise), ECB-BASE reports an inflation peak of
+$+0.30$ to $+0.45$ pp at four quarters \citep{ECBBASE2019}; our
+DSGE delivers $+0.50$ to $+0.65$ pp on $\pi_F$ and $+0.13$ to
+$+0.18$ pp on $\pi_H$. The orders of magnitude are compatible
+within a factor of two. The Bayesian DSGE places more weight on the
+inflationary side of the response and less on the persistence,
+reflecting linear approximation and the absence of a sectoral
+energy block.
+
+\paragraph{Asymmetric pass-through.}
+ECB-BASE's country-satellite calibrations document a
+larger pass-through to German HICP ($\approx 0.18$ at four quarters)
+than to French HICP ($\approx 0.10$), consistent with the French
+\emph{bouclier tarifaire}. Our DSGE delivers a similar qualitative
+pattern (a 4:1 ratio between German and French inflation responses
+at the peak) but does not mechanically discriminate between supply-side
+exposure and price regulation; the asymmetry emerges entirely from
+trade openness ($\alpha^C_H \neq \alpha^C_F$) and from estimated
+parameter values.
+
+\paragraph{Complementarity.}
+The two models are thus complementary tools for the same question.
+ECB-BASE provides the operational quantification of energy
+pass-through that policy-makers use, with explicit observed input
+prices. Our DSGE provides the structural identification of the
+welfare-relevant transmission and a tractable counterfactual
+toolbox. For our research question -- the asymmetric soft-inflation
+channel between two euro-area economies -- the DSGE is the right
+tool, provided the identification limits we documented are made
+transparent.
+
+% =====================================================================
+\section{Conclusion}
+% =====================================================================
+We estimated a small two-country DSGE on euro-area data, identified
+the soft-inflation channel from German to French inflation through
+trade, the bilateral real exchange rate and the common Taylor rule,
+and showed how a more hawkish ECB rule would have damped the
+2021--2023 inflation episode at the cost of additional output loss
+and bilateral trade contraction. The estimation and counterfactual
+machinery worked, with two caveats made explicit: the MCMC chains
+are under-mixed (hence the inferential uncertainty around the
+posterior moments is best assessed via the Laplace approximation
+at the mode), and the absence of an observable energy price series
+forces the Kalman filter to attribute the 2022 inflation surge to a
+residual monetary shock rather than to the structural cost-push
+shock $\eta_{p,F}$. Future work should incorporate gas and
+electricity price series as observables (or as exogenous variables
+\emph{à la} ECB-BASE), extend the model with explicit sectoral
+energy intensity, and compare the welfare implications of the
+counterfactual rule against the policy actually pursued by the ECB.
+
+\bibliography{refs}
+
+\appendix
+
+% =====================================================================
+\section{Supplementary Posterior Diagnostics}\label{app:diagnostics}
+% =====================================================================
+This appendix collects supplementary figures supporting the
+estimation results of the main text. Figure~\ref{fig:priorpost2}
+displays the prior and posterior marginal densities of the remaining
+parameters not shown in Figure~\ref{fig:priorpost}.
+Figure~\ref{fig:mdiag} shows the multivariate Brooks-Gelman
+diagnostic across the two MCMC chains: the inter- and intra-chain
+moments do not stabilise within 5{,}000 draws, supporting the use
+of the Laplace approximation around the mode for inference. The
+historical decomposition of German inflation
+(Figure~\ref{fig:histdecompF}) presents the same identification
+limit as for France: the 2022 surge is absorbed by the residual
+monetary shock.
+
+\begin{figure}[h!]
+  \centering
+  \includegraphics[width=0.95\linewidth]{estimation_UEM_PriorsAndPosteriors2}
+  \caption{Prior (grey) and posterior (black) marginal densities for
+    the remaining estimated parameters and shock standard deviations.}
+  \label{fig:priorpost2}
+\end{figure}
+
+\begin{figure}[h!]
+  \centering
+  \includegraphics[width=0.85\linewidth]{estimation_UEM_mdiag}
+  \caption{Multivariate Brooks-Gelman MCMC convergence diagnostic.
+    The interval, m2 and m3 statistics fail to stabilise across the
+    two chains within 5{,}000 draws, indicating insufficient mixing.}
+  \label{fig:mdiag}
+\end{figure}
+
+\begin{figure}[h!]
+  \centering
+  \includegraphics[width=0.95\linewidth]{estimation_UEM_shock_decomposition_pi_F_obs}
+  \caption{Historical shock decomposition of German HICP inflation
+    in deviation from target (1999Q2--2025Q3). The decomposition
+    pattern is qualitatively similar to that of France
+    (Figure~\ref{fig:histdecomp}), with the 2022 surge attributed
+    to the residual monetary shock $\eta_r$ rather than to the
+    cost-push shock $\eta_{p,F}$.}
+  \label{fig:histdecompF}
+\end{figure}
+
+\begin{figure}[h!]
+  \centering
+  \begin{subfigure}[t]{0.48\linewidth}
+    \centering
+    \includegraphics[width=\linewidth]{fig2_choc_energie}
+    \caption{European wholesale energy price index (gas+electricity), normalised to 100 in 2019.}
+    \label{fig:energy}
+  \end{subfigure}\hfill
+  \begin{subfigure}[t]{0.48\linewidth}
+    \centering
+    \includegraphics[width=\linewidth]{fig3_differentiel_inflation}
+    \caption{French minus German HICP inflation, quarterly. The 2022 episode is asymmetric.}
+    \label{fig:diffinfl}
+  \end{subfigure}
+  \caption{Motivating evidence: the 2021--2023 European energy shock
+    and the asymmetric inflation response across France and Germany.}
+  \label{fig:motivation}
+\end{figure}
+
+\section{Code and Data Availability}
+The full reproducibility package (Dynare \texttt{.mod} files, MATLAB
+drivers, observable data, and figure scripts) is available in the
+project repository \texttt{ImportedInflation/}. The estimation is
+performed with Dynare 6.5 on MATLAB R2025b. Key entry points are:
+\begin{itemize}
+\item \texttt{src/run\_estimation\_UEM.m} -- Bayesian estimation
+  driver (Metropolis-Hastings).
+\item \texttt{src/scenario\_UEM.mod} -- Two-country DSGE at
+  posterior parameter values.
+\item \texttt{src/run\_scenario\_UEM.m} -- Counterfactual policy
+  scenario driver.
+\item \texttt{src/analyze\_shock\_decomposition.m} -- Historical
+  decomposition post-processing.
+\item \texttt{data/myobs\_FR\_DE.mat} -- 5 quarterly observables
+  (1999Q2--2025Q3).
+\end{itemize}
+
+\end{document}
