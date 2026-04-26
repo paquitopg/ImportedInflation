@@ -24,7 +24,6 @@ From the project root, in MATLAB:
 ImportedInflation/
 ├── run_all.m                       <- single-click replication driver
 ├── README.md                       <- this file
-├── REFLEXION.md                    <- iteration-by-iteration log
 ├── src/
 │   ├── two_countries_UEM.mod       <- baseline two-country EMU model
 │   ├── estimation_UEM.mod          <- estimation block (priors, data)
@@ -44,12 +43,7 @@ ImportedInflation/
 │   └── notes/                      <- ECB-BASE comparison notes
 ├── build/                          <- Dynare artifacts (auto-generated)
 ├── logs/                           <- raw Dynare logs
-├── report/
-│   ├── main.tex                    <- 11-page Overleaf-ready report
-│   ├── refs.bib                    <- bibliography (13 entries)
-│   └── fig/                        <- figures used by main.tex
-├── references/                     <- course materials and guidelines
-└── resources/                      <- helper functions (Vermandel codebook)
+└── resources/                      <- helper functions (Course codebook)
 ```
 
 ## Pipeline (what `run_all.m` does)
@@ -91,18 +85,6 @@ The model deliberately stays small to remain identifiable on five observables. K
 - Counterfactual table impact ⇐ `data/tables/scenario_impact.csv`
 - Body figures 1–5 ⇐ files in `data/figures/` listed in `report/main.tex` `\graphicspath`
 - Appendix figures A1–A4 ⇐ idem (Brooks–Gelman, density set 2, German hist-decomp, motivating panels)
-
-## Building the report
-
-```bash
-cd report
-pdflatex main.tex
-bibtex main
-pdflatex main.tex
-pdflatex main.tex
-```
-
-A pre-zipped Overleaf project is available at the project root as `report_overleaf_v2.zip`.
 
 ## License
 
