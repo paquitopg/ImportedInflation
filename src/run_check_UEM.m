@@ -1,16 +1,13 @@
 % run_check_UEM.m
 % -------------------------------------------------------------
 %  Diagnostic de two_countries_UEM.mod :
-%    1) residus au steady-state (consistance de la calibration)
-%    2) condition de Blanchard-Kahn (determinacy)
-%    3) signe des IRF pour un choc energie DE (eta_p_F)
+%    1) residus au steady-state
+%    2) condition de Blanchard-Kahn
+%    3) signe des IRF pour un choc energie DE 
 %
 %  Produit :
 %    logs/model_check.log      - resume structure lisible
 %    logs/model_check_raw.log  - sortie brute de Dynare
-%
-%  A lancer depuis src/ :
-%      >> run_check_UEM
 % -------------------------------------------------------------
 
 close all; clear;
@@ -27,9 +24,6 @@ logfile    = fullfile(log_dir, 'model_check.log');
 diary_file = fullfile(log_dir, 'model_check_raw.log');
 if exist(diary_file,'file'); delete(diary_file); end
 
-% On copie le .mod dans build/ pour que Dynare genere tous ses artefacts
-% (two_countries_UEM/, +two_countries_UEM/, .log, .m) dans build/ et non
-% dans src/. src/ reste reserve au code source versionne.
 mod_bld = fullfile(bld_dir, 'two_countries_UEM.mod');
 copyfile(mod_src, mod_bld);
 cd(bld_dir);

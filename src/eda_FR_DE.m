@@ -3,16 +3,6 @@
 %  Analyse exploratoire des observables France/Allemagne téléchargés par
 %  my_db_FR_DE.m.
 %
-%  Objectifs :
-%   1) Afficher la fenêtre effective commune et les tailles d'échantillon.
-%   2) Tracer les 4 observables d'estimation + variables auxiliaires.
-%   3) Statistiques descriptives (moyenne, std, AR(1), min/max).
-%   4) Test de stationnarité (ADF si Econometrics Toolbox dispo, sinon
-%      proxy par coefficient AR(1)).
-%   5) Zoom sur le choc énergétique 2021-2023.
-%   6) Corrélations croisées clés (inflation FR vs DE, inflation énergie
-%      DE vs inflation FR).
-%
 %  Sorties : figures PNG dans ../data/figures/
 %            table statistiques en console
 %

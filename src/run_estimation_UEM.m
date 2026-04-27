@@ -1,16 +1,9 @@
 % run_estimation_UEM.m
 % -------------------------------------------------------------
 %  Lance l'estimation bayesienne de two_countries_UEM via
-%  estimation_UEM.mod, en routant tous les artefacts Dynare
-%  (chains MH, _results.mat, +estimation_UEM/, etc.) vers build/,
-%  et :
+%  estimation_UEM.mod :
 %    - le log brut complet vers logs/estimation_raw.log
 %    - toutes les figures generees (EPS, PDF) vers data/figures/
-%
-%  A lancer depuis src/ :
-%      >> run_estimation_UEM
-%
-%  Duree typique : 10-30 min (mode_compute=9 + 5000 MH x 2).
 % -------------------------------------------------------------
 
 close all; clear;

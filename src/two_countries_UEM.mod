@@ -3,15 +3,6 @@
 %  DSGE a deux pays adapte a l'Union Economique et Monetaire.
 %  Home = France, Foreign = Allemagne.
 %  Projet ENSAE 2026  ImportedInflation.
-%
-%  Derive de soe_standard.mod (Vermandel 2025) avec les
-%  adaptations UEM suivantes :
-%   (i)   taux de change nominal figur : Delta e_t = 1,
-%   (ii)  regle de Taylor unique BCE (pi_UEM, y_UEM),
-%   (iii) un seul taux d'interet : r_H = r_F = r,
-%   (iv)  bloc carbone/emissions supprime (hors sujet),
-%   (v)   chocs cost-push calibres asymetriquement pour
-%         representer le choc de prix de l'energie.
 % ============================================================
 
 close all;
@@ -50,7 +41,7 @@ parameters
     rho_r ;
 
 %----------------------------------------------------------------
-% 2. Calibration FR-DE (session 2 de REFLEXION.md)
+% 2. Calibration FR-DE
 %----------------------------------------------------------------
 
 % --- Preferences (symetriques, standards UEM) ---

@@ -3,33 +3,24 @@
 %  Estimation bayesienne du modele two_countries_UEM
 %  sur l'echantillon FR-DE 1999Q2 - 2025Q3 (N=106).
 %
-%  Projet ENSAE 2026  ImportedInflation.
-%
 %  Observables (5) :
 %     gy_H_obs, gy_F_obs, pi_H_obs, pi_F_obs, r_F_obs
-%  NB : gex_*_obs ecartes (variance empirique 50x trop grande pour le DSGE).
 %
-%  Parametres estimes (16 - ITER 8) :
+%  Parametres estimes :
 %     - rigidites nominales : xi_H, xi_F
 %     - habits : hc_H, hc_F
 %     - regle BCE : rho, phi_pi
 %     - persistance : rho_z_H, rho_z_F, rho_r
 %     - ecarts-type chocs structurels : eta_z_*, eta_p_*
 %     - ecarts-type erreurs de mesure : ME_pi_*, ME_gy_*, ME_r
-%       (5 ME estimees pour eviter le catch-all sur chocs structurels)
 %
-%  Parametres CALIBRES (cf. iter 1-6, sans observable de contrepartie) :
+%  Parametres CALIBRES :
 %     - beta, alpha, epsilon, mu, n, piss, phi_y, sigmaC_*, sigmaH_*
 %     - commerce bilateral (alphaC_H, alphaC_F)
 %     - persistance chocs energie (rho_p_H=0.90, rho_p_F=0.95)
 %     - chocs sans observable : eta_x_*, eta_g_*, eta_r calibres tight
 %       dans le bloc shocks ; rho_x_*, rho_g_* fixes a 0.85
 %     - correlation eta_p_H/eta_p_F = 0.7 (choc energie commun)
-%
-%  Erreur de mesure (10% std empirique) sur les 5 observables :
-%     necessaire car le modele ne peut pas matcher la variance d'inflation
-%     observee (cf. iter 6 : sans erreur de mesure, eta_z_* explose en
-%     catch-all). Permet une estimation propre et bornee.
 % ============================================================
 
 close all;
@@ -301,20 +292,6 @@ estimation(
     mode_compute    = 9,
     optim           = ('MaxIter', 3000, 'TolFun', 1e-7, 'TolX', 1e-7),
     mode_check,
-    % ============================================================
-    % ITER 9 : SOLUTION AU PROBLEME HESSIENNE NON-DP
-    % ------------------------------------------------------------
-    % Quand le mode est sur une paroi (UB/LB), la Hessienne calculee
-    % par differences finies n'est pas Definie-Positive ; or MH-RWM
-    % a besoin d'une matrice de covariance de proposition PD.
-    %
-    % MCMC_jumping_covariance = prior_variance utilise la MATRICE DE
-    % VARIANCE DES PRIORS comme proposal covariance, ce qui garantit
-    % la positive-definitude par construction. C'est l'option officielle
-    % Dynare pour contourner ce probleme.
-    %
-    % Documentee dans le manuel Dynare 6, section 4.20.
-    % ============================================================
     MCMC_jumping_covariance = 'prior_variance',
     mh_replic       = 5000,
     mh_nblocks      = 2,

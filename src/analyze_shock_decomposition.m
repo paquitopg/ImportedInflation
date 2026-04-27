@@ -5,9 +5,6 @@
 %    - data/tables/shock_decomp_pi_F.csv
 %    - une synthese imprimee a l'ecran sur 2021Q1-2023Q4.
 %
-%  Utile pour le point 5.4 du rapport : qui a pousse l'inflation
-%  FR/DE pendant la periode du choc d'energie ?
-%
 %  Pre-requis : run_estimation_UEM.m a tourne avec succes.
 % -------------------------------------------------------------
 

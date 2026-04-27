@@ -11,12 +11,6 @@
 %    4. Trace les comparaisons des deux regimes pour 9 variables :
 %         pi_H, pi_F, pi_UEM, gy_H, gy_F, ex_H, ex_F, NFA_H, r
 %    5. Sauve toutes les figures dans data/figures/scenario_*.png.
-%
-%  Usage :
-%      >> run_scenario_UEM
-%
-%  Pre-requis : run_estimation_UEM.m a tourne avec succes
-%               (estimation_UEM_results.mat dans build/).
 % -------------------------------------------------------------
 
 close all; clear;
@@ -196,9 +190,6 @@ writetable(T_out, table_path);
 fprintf('\nTableau d''impact : %s\n', table_path);
 
 % ---------- Etape 6 : copie des figures Dynare ----------------
-% Dynare a produit des IRF (EPS+PDF) dans build/scenario_UEM/graphs/
-% sous regime baseline. On les copie vers data/figures/ avec prefixe
-% "scenario_baseline_".
 src_fig_dir = fullfile(bld, 'scenario_UEM', 'graphs');
 n_copied = 0;
 if exist(src_fig_dir, 'dir')

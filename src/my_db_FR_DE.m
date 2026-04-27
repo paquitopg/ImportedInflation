@@ -1,22 +1,17 @@
 % =========================================================================
 %  my_db_FR_DE.m
-%  Collecte DBnomics des séries France / Allemagne pour le projet
-%  ImportedInflation (ENSAE 2026).
+%  Collecte DBnomics des séries France / Allemagne
 %
-%  Observables cibles (4) pour l'estimation du modèle two_countries adapté :
+%  Observables cibles :
 %      gy_H_obs : croissance PIB réel France (Home)
 %      gy_F_obs : croissance PIB réel Allemagne (Foreign)
 %      pi_H_obs : inflation trimestrielle France (déviation vs ss)
 %      pi_F_obs : inflation trimestrielle Allemagne (déviation vs ss)
 %
-%  Séries descriptives / scénarios (non observables) :
+%  Séries descriptives / scénarios :
 %      conso FR/DE, exports FR/DE, HICP énergie FR/DE, Euribor 3M.
 %
 %  Sortie : ../data/myobs_FR_DE.mat
-%
-%  Pré-requis : call_dbnomics.m est présent dans le même dossier src/.
-%               (Nota: MATLAB refuse d'ajouter un dossier nommé `resources`
-%                au path, donc on duplique la fonction ici pour simplicité.)
 % =========================================================================
 
 close all; clc;
@@ -29,14 +24,6 @@ if ~exist(data_dir, 'dir'), mkdir(data_dir); end
 
 % =========================================================================
 % 1) REQUÊTES DBNOMICS
-% =========================================================================
-%  NOTE : Eurostat a re-basé les volumes chaînés en 2024 (année de base 2020).
-%  Selon la date de scraping DBnomics, le code volume peut être :
-%     CLV20_MEUR  (base 2020, standard actuel Eurostat)
-%     CLV15_MEUR  (base 2015, standard intermédiaire)
-%     CLV10_MEUR  (base 2010, ancien)
-%  Le paramètre CLV_BASE ci-dessous permet de basculer en une ligne.
-%  En cas d'erreur « slug not found », essayer successivement les alternatives.
 % =========================================================================
 CLV_BASE = 'CLV20_MEUR';   % alternatives : 'CLV15_MEUR', 'CLV10_MEUR'
 
